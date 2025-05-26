@@ -233,16 +233,16 @@
   {
     "objectID": "VillegasJoseAlbertoU1T1.html",
     "href": "VillegasJoseAlbertoU1T1.html",
-    "title": "1A. Reporte escrito. Experimentos y análisis.",
+    "title": "1A. Reporte escrito. Introducción al análisis de algoritmos.",
     "section": "",
     "text": "José Alberto Villegas Díaz Disciplina"
   },
   {
     "objectID": "VillegasJoseAlbertoU1T1.html#tabla-1.crecimiento-de-funciones-de-complejidad-para-diferentes-tamaños-de-entrada-n",
     "href": "VillegasJoseAlbertoU1T1.html#tabla-1.crecimiento-de-funciones-de-complejidad-para-diferentes-tamaños-de-entrada-n",
-    "title": "1A. Reporte escrito. Experimentos y análisis.",
+    "title": "1A. Reporte escrito. Introducción al análisis de algoritmos.",
     "section": "Tabla 1.Crecimiento de Funciones de Complejidad para Diferentes Tamaños de Entrada \\(n\\)",
-    "text": "Tabla 1.Crecimiento de Funciones de Complejidad para Diferentes Tamaños de Entrada \\(n\\)\n\\[\n\\begin{array}{|c|c|c|c|c|}\n\\hline\n\\textbf{Función} & n=100 & n=1000 & n=10000 & n=100000 \\\\\n\\hline\nO(1) & 1 & 1 & 1 & 1 \\\\\nO(\\log n) & 6 & 9 & 13 & 16 \\\\\nO(n) & 100 & 10^3 & 10^4 & 10^5 \\\\\nO(n \\log n) & 6 \\times 10^2 & 9 \\times 10^3 & 1.3 \\times 10^5 & 1.6 \\times 10^6 \\\\\nO(n^2) & 10^3 & 10^6 & 10^8 & 10^{10} \\\\\nO(n^3) & 10^6 & 10^9 & 10^{12} & 10^{15} \\\\\nO(n!) & \\infty & \\infty & \\infty & \\infty \\\\\nO(n^n) & \\infty & \\infty & \\infty & \\infty \\\\\n\\hline\n\\end{array}\n\\]\nValores aproximados del crecimiento temporal para distintas funciones de complejidad en función del tamaño de la entrada ( n ). Se muestra cómo aumentan los costos computacionales desde complejidades constantes hasta exponenciales y factoriales, utilizando notación científica para facilitar la comparación en rangos grandes de ( n )."
+    "text": "Tabla 1.Crecimiento de Funciones de Complejidad para Diferentes Tamaños de Entrada \\(n\\)\n\\[\n\\begin{array}{|c|c|c|c|c|}\n\\hline\n\\textbf{Función} & n=100 & n=1000 & n=10000 & n=100000 \\\\\n\\hline\nO(1) & 1 & 1 & 1 & 1 \\\\\nO(\\log n) & 6 & 9 & 13 & 16 \\\\\nO(n) & 100 & 10^3 & 10^4 & 10^5 \\\\\nO(n \\log n) & 6 \\times 10^2 & 9 \\times 10^3 & 1.3 \\times 10^5 & 1.6 \\times 10^6 \\\\\nO(n^2) & 10^3 & 10^6 & 10^8 & 10^{10} \\\\\nO(n^3) & 10^6 & 10^9 & 10^{12} & 10^{15} \\\\\nO(n!) & \\infty & \\infty & \\infty & \\infty \\\\\nO(n^n) & \\infty & \\infty & \\infty & \\infty \\\\\n\\hline\n\\end{array}\n\\]\nValores aproximados del crecimiento temporal para distintas funciones de complejidad en función del tamaño de la entrada \\(n\\). Se muestra cómo aumentan los costos computacionales desde complejidades constantes hasta exponenciales y factoriales, utilizando notación científica para facilitar la comparación en rangos grandes de \\(n\\)."
   },
   {
     "objectID": "VillegasJoseAlbertoU4-T1.html",
