@@ -1,1 +1,12 @@
 /* css styles */
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.navbar {
+  background-color: #6E152E;
+}
+
+.navbar-brand, .navbar-nav > li > a {
+  color: white !important;
+}
