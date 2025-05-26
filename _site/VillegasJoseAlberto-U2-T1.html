@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2A. Reporte escrito. Experimentos y análisis de estructuras de datos. – AnalisisAlgoritmos2025</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">AnalisisAlgoritmos2025</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#lista-de-cambios" id="toc-lista-de-cambios" class="nav-link active" data-scroll-target="#lista-de-cambios">Lista de cambios:</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción">Introducción</a></li>
+  <li><a href="#algoritmo-para-multiplicación-de-matrices-aleatorias-de-tamaño-nn" id="toc-algoritmo-para-multiplicación-de-matrices-aleatorias-de-tamaño-nn" class="nav-link" data-scroll-target="#algoritmo-para-multiplicación-de-matrices-aleatorias-de-tamaño-nn">Algoritmo para multiplicación de matrices aleatorias de tamaño <span class="math inline">\(n×n\)</span></a>
+  <ul class="collapse">
+  <li><a href="#definición-y-prueba-del-algoritmo" id="toc-definición-y-prueba-del-algoritmo" class="nav-link" data-scroll-target="#definición-y-prueba-del-algoritmo">Definición y prueba del algoritmo</a></li>
+  <li><a href="#evaluación-para-n100" id="toc-evaluación-para-n100" class="nav-link" data-scroll-target="#evaluación-para-n100">Evaluación para <span class="math inline">\(n=100\)</span></a></li>
+  <li><a href="#evaluación-para-n300" id="toc-evaluación-para-n300" class="nav-link" data-scroll-target="#evaluación-para-n300">Evaluación para <span class="math inline">\(n=300\)</span></a></li>
+  <li><a href="#evaluación-para-n1000" id="toc-evaluación-para-n1000" class="nav-link" data-scroll-target="#evaluación-para-n1000">Evaluación para <span class="math inline">\(n=1000\)</span></a></li>
+  <li><a href="#experimento-para-matrices-dispersas" id="toc-experimento-para-matrices-dispersas" class="nav-link" data-scroll-target="#experimento-para-matrices-dispersas">Experimento para matrices dispersas</a></li>
+  </ul></li>
+  <li><a href="#algortimo-para-eliminación-gaussiana-gauss-jordan-para-matrices-aleatorias-de-tamaño-nn" id="toc-algortimo-para-eliminación-gaussiana-gauss-jordan-para-matrices-aleatorias-de-tamaño-nn" class="nav-link" data-scroll-target="#algortimo-para-eliminación-gaussiana-gauss-jordan-para-matrices-aleatorias-de-tamaño-nn">Algortimo para Eliminación gaussiana / Gauss-Jordan para matrices aleatorias de tamaño <span class="math inline">\(n×n\)</span></a>
+  <ul class="collapse">
+  <li><a href="#definición-y-prueba-del-algoritmo-1" id="toc-definición-y-prueba-del-algoritmo-1" class="nav-link" data-scroll-target="#definición-y-prueba-del-algoritmo-1">Definición y prueba del algoritmo</a></li>
+  <li><a href="#definición-y-prueba-del-algoritmo-2" id="toc-definición-y-prueba-del-algoritmo-2" class="nav-link" data-scroll-target="#definición-y-prueba-del-algoritmo-2">Definición y prueba del algoritmo</a></li>
+  <li><a href="#evaluación-para-n100-1" id="toc-evaluación-para-n100-1" class="nav-link" data-scroll-target="#evaluación-para-n100-1">Evaluación para <span class="math inline">\(n=100\)</span></a></li>
+  <li><a href="#evaluación-para-n300-1" id="toc-evaluación-para-n300-1" class="nav-link" data-scroll-target="#evaluación-para-n300-1">Evaluación para <span class="math inline">\(n=300\)</span></a></li>
+  <li><a href="#evaluación-para-n1000-1" id="toc-evaluación-para-n1000-1" class="nav-link" data-scroll-target="#evaluación-para-n1000-1">Evaluación para <span class="math inline">\(n=1000\)</span></a></li>
+  <li><a href="#experimento-para-matrices-dispersas-1" id="toc-experimento-para-matrices-dispersas-1" class="nav-link" data-scroll-target="#experimento-para-matrices-dispersas-1">Experimento para matrices dispersas</a></li>
+  </ul></li>
+  <li><a href="#discusión-y-conclusiones" id="toc-discusión-y-conclusiones" class="nav-link" data-scroll-target="#discusión-y-conclusiones">Discusión y conclusiones</a>
+  <ul class="collapse">
+  <li><a href="#cuál-es-el-impacto-de-acceder-los-elementos-contiguos-en-memoria-de-una-matriz" id="toc-cuál-es-el-impacto-de-acceder-los-elementos-contiguos-en-memoria-de-una-matriz" class="nav-link" data-scroll-target="#cuál-es-el-impacto-de-acceder-los-elementos-contiguos-en-memoria-de-una-matriz">¿Cuál es el impacto de acceder los elementos contiguos en memoria de una matriz?</a></li>
+  <li><a href="#qué-cambiarías-si-utilizas-matrices-dispersas-cuáles-serían-los-costos" id="toc-qué-cambiarías-si-utilizas-matrices-dispersas-cuáles-serían-los-costos" class="nav-link" data-scroll-target="#qué-cambiarías-si-utilizas-matrices-dispersas-cuáles-serían-los-costos">¿Qué cambiarías si utilizas matrices dispersas? ¿Cuáles serían los costos?</a></li>
+  </ul></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">2A. Reporte escrito. Experimentos y análisis de estructuras de datos.</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>José Alberto Villegas Díaz Disciplina</p>
+<section id="lista-de-cambios" class="level1">
+<h1>Lista de cambios:</h1>
+<p>Sin cambios. Esta entrega se calificó con la nota más alta.</p>
+</section>
+<section id="introducción" class="level1">
+<h1>Introducción</h1>
+<p>En este reporte, se lleva a cabo un análisis exhaustivo de dos algoritmos de álgebra lineal aplicados sobre matrices: la multiplicación de matrices y la eliminación gaussiana.El objetivo principal de este reporte es implementar y analizar el desempeño de ambos algoritmos al trabajar con matrices aleatorias de tamaño <span class="math inline">\(nxn\)</span> para valores de <span class="math inline">\(n=100,300, 1000\)</span>. Para evaluar de manera rigurosa su eficiencia, se compararán los resultados en términos del número de operaciones requeridas y el tiempo real de ejecución para cada algoritmo. La elección de estos parámetros permitirá observar cómo cada uno de estos algoritmos escala con el tamaño de las matrices, proporcionando así una visión clara de sus ventajas y limitaciones bajo diferentes condiciones.</p>
+</section>
+<section id="algoritmo-para-multiplicación-de-matrices-aleatorias-de-tamaño-nn" class="level1">
+<h1>Algoritmo para multiplicación de matrices aleatorias de tamaño <span class="math inline">\(n×n\)</span></h1>
+<p>En primera instancia crearemos dos funciones, una para la generación de matrices aleatorias de tamaño <span class="math inline">\(nxn\)</span> y otra implementando un algoritmo convencional para la multiplicación de las mismas.</p>
+<p>La definición dada por Grossman &amp; Flores (2012), de producto de matrices establece:</p>
+<p>Sea <span class="math inline">\(A = (a_{ij})\)</span> una matriz de dimensión <span class="math inline">\(m \times n\)</span>, y sea <span class="math inline">\(B = (b_{ij})\)</span> una matriz de dimensión <span class="math inline">\(n \times p\)</span>. Entonces el producto de <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> es una matriz <span class="math inline">\(C = (c_{ij})\)</span> de dimensión <span class="math inline">\(m \times p\)</span>, en donde</p>
+<p><span class="math display">\[
+c_{ij} = (\text{renglón } i \text{ de } A) \cdot (\text{columna } j \text{ de } B)
+\]</span></p>
+<p>Es decir, el elemento <span class="math inline">\(c_{ij}\)</span> de <span class="math inline">\(AB\)</span> es el producto punto del renglón <span class="math inline">\(i\)</span> de <span class="math inline">\(A\)</span> y la columna <span class="math inline">\(j\)</span> de <span class="math inline">\(B\)</span>. Si esto se extiende, se obtiene</p>
+<p><span class="math display">\[
+c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{in}b_{nj}
+\]</span></p>
+<p>Si el número de columnas de <span class="math inline">\(A\)</span> es igual al número de renglones de <span class="math inline">\(B\)</span>, entonces se dice que <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son compatibles bajo la multiplicación.</p>
+<p>Bajo ese esquema teórico se realizara el algoritmo.</p>
+<section id="definición-y-prueba-del-algoritmo" class="level2">
+<h2 class="anchored" data-anchor-id="definición-y-prueba-del-algoritmo">Definición y prueba del algoritmo</h2>
+<div id="ae118ca7-cc24-468b-9dd6-e9c10ecd246f" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para matrices aleatorias de tamaño n x n</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">generar_matriz_aleatoria</span>(n)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">rand</span>(n, n)  <span class="co"># Matriz con números aleatorios entre 0 y 1</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Función en la que se implementa un algoritmo convencional para el producto de matrices</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">multiplicar_matrices</span>(A, B)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">size</span>(A, <span class="fl">1</span>)  <span class="co">#A y B son de tamaño n x n</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    C <span class="op">=</span> <span class="fu">zeros</span>(n, n)  <span class="co"># Matriz resultado en la que se asignarán los valores de cij</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    operaciones <span class="op">=</span> <span class="fl">0</span>  <span class="co"># Contador de operaciones</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Algoritmo de multiplicación de matrices convencional</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>            suma <span class="op">=</span> <span class="fl">0</span>  <span class="co"># Variable para la suma en la posición (i, j)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> k <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                suma <span class="op">+=</span> A[i, k] <span class="op">*</span> B[k, j]  <span class="co"># Multiplicación y suma</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                operaciones <span class="op">+=</span> <span class="fl">1</span>  <span class="co"># Contamos cada multiplicación</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            C[i, j] <span class="op">=</span> suma  <span class="co"># Asignamos el valor a la matriz resultado</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> C, operaciones  <span class="co"># Retorna la matriz resultado y el número de operaciones</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>multiplicar_matrices (generic function with 1 method)</code></pre>
+</div>
+</div>
+<p>Una vez definidas las funciones podemos realizar una validación simple para matrices pequeñas de orden 3x3.</p>
+<div id="7a7ef250-02d0-41a9-922b-2408d3ea60f9" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validación de uso con matrices 3x3</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">3</span>  <span class="co"># Tamaño de la matriz</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">generar_matriz_aleatoria</span>(n)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">generar_matriz_aleatoria</span>(n)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiplicación de matrices</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>C, operaciones <span class="op">=</span> <span class="fu">multiplicar_matrices</span>(A, B)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar el resultado</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Matriz A:"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(A)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Matriz B:"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(B)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Matriz C (Resultado):"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(C)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar el número de operaciones realizadas</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Número de operaciones realizadas: </span><span class="sc">$</span>operaciones<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Matriz A:
+[0.48776183234824144 0.6124433790334284 0.028635546875128703; 0.8370848622572715 0.7473292661917925 0.9877981495667337; 0.9735150429578445 0.19481858305396282 0.057932071864141954]
+Matriz B:
+[0.3442737221849198 0.8344937410238792 0.5451937807016894; 0.766291104724915 0.08561097205382118 0.6577453667078036; 0.9520486858842626 0.7301190823571463 0.9768559577402947]
+Matriz C (Resultado):
+[0.664495929835295 0.48037342841918884 0.696729316958151; 1.8012900205112459 1.483731941698228 1.9128623305140917; 0.539597547560282 0.8713681295588075 0.7154866567372042]
+Número de operaciones realizadas: 27</code></pre>
+</div>
+</div>
+<p>Los algoritmos mostraron un correcto funcionamiento por lo que se procederá a evaluar para los distintos valores de <span class="math inline">\(n\)</span>. Nótese que para esta validación se imprimieron las matrices, esto no es viable en los siguientes casos debido al tamaño de las entradas.</p>
+</section>
+<section id="evaluación-para-n100" class="level2">
+<h2 class="anchored" data-anchor-id="evaluación-para-n100">Evaluación para <span class="math inline">\(n=100\)</span></h2>
+<div id="22283310-2861-41e8-839b-c821c5b4df18" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validación de uso con matrices 100x100</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">100</span>  <span class="co"># Tamaño de la matriz</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">generar_matriz_aleatoria</span>(n)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">generar_matriz_aleatoria</span>(n)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiplicación de matrices</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>C, operaciones <span class="op">=</span> <span class="fu">multiplicar_matrices</span>(A, B)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar el número de operaciones realizadas</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Número de operaciones realizadas: </span><span class="sc">$</span>operaciones<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Número de operaciones realizadas: 1000000</code></pre>
+</div>
+</div>
+<p>Se puede observar que el número de operaciones realizadas cuando <span class="math inline">\(n=100\)</span> es de 1,000,000 es decir <span class="math inline">\(100^3\)</span></p>
+<div id="0abb56a8-4cdc-4279-95d7-0d8fae57c940" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@btime</span> <span class="fu">multiplicar_matrices</span>(A, B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  825.900 μs (4 allocations: 78.23 KiB)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>([28.132338392688823 23.908113166359033 … 25.024304177684872 25.7096938977009; 26.667022471404753 23.660024037205346 … 24.639590229379817 26.44517290558687; … ; 26.002885424023155 22.99216990611572 … 23.492611418137535 24.916168129409794; 27.243874373771543 25.87820795626854 … 26.581182371428145 26.91368518219324], 1000000)</code></pre>
+</div>
+</div>
+</section>
+<section id="evaluación-para-n300" class="level2">
+<h2 class="anchored" data-anchor-id="evaluación-para-n300">Evaluación para <span class="math inline">\(n=300\)</span></h2>
+<div id="25b2e1e0-8259-43d1-8cec-8bcc69462fa5" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validación de uso con matrices 100x100</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">300</span>  <span class="co"># Tamaño de la matriz</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">generar_matriz_aleatoria</span>(n)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">generar_matriz_aleatoria</span>(n)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiplicación de matrices</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>C, operaciones <span class="op">=</span> <span class="fu">multiplicar_matrices</span>(A, B)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar el número de operaciones realizadas</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Número de operaciones realizadas: </span><span class="sc">$</span>operaciones<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Número de operaciones realizadas: 27000000</code></pre>
+</div>
+</div>
+<p>Se puede observar que el número de operaciones realizadas cuando <span class="math inline">\(n=300\)</span> es de 27,000,000 es decir <span class="math inline">\(300^3\)</span></p>
+<div id="39a86cd3-6698-4be5-9c0c-9ff1bd28ac06" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@btime</span> <span class="fu">multiplicar_matrices</span>(A, B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  23.998 ms (4 allocations: 703.23 KiB)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<pre><code>([80.53091461158125 77.91382521022068 … 78.23327276120801 77.15153895643374; 71.37048085506102 70.54930640968472 … 67.77446808097446 69.81725780702683; … ; 78.54949084586757 74.26211081012234 … 74.54586378001189 75.42220879028378; 72.79998868719915 72.28643983521658 … 71.78528089018043 70.06249995014716], 27000000)</code></pre>
+</div>
+</div>
+<p>Podemos observar que el tiempo en el que incrementó fue apróximadamente de un orden más respecto de <span class="math inline">\(n=100\)</span> y el número de asignaciones permanece constante</p>
+</section>
+<section id="evaluación-para-n1000" class="level2">
+<h2 class="anchored" data-anchor-id="evaluación-para-n1000">Evaluación para <span class="math inline">\(n=1000\)</span></h2>
+<div id="a8175b67-a891-4ca8-bff8-e8ce56156aef" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validación de uso con matrices 1000x1000</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">1000</span>  <span class="co"># Tamaño de la matriz</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">generar_matriz_aleatoria</span>(n)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">generar_matriz_aleatoria</span>(n)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiplicación de matrices</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>C, operaciones <span class="op">=</span> <span class="fu">multiplicar_matrices</span>(A, B)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar el número de operaciones realizadas</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Número de operaciones realizadas: </span><span class="sc">$</span>operaciones<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Número de operaciones realizadas: 1000000000</code></pre>
+</div>
+</div>
+<p>Se puede observar que el número de operaciones realizadas cuando <span class="math inline">\(n=1000\)</span> es de 1,000,000,000 es decir <span class="math inline">\(1000^3\)</span></p>
+<div id="f194fd45-aeaa-4624-b24a-cf64e7923de1" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@btime</span> <span class="fu">multiplicar_matrices</span>(A, B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  1.331 s (4 allocations: 7.63 MiB)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<pre><code>([252.28375919010392 256.163478843609 … 255.81051340050507 252.5790668154193; 245.61903803038666 244.96190533494607 … 244.73860377052003 243.5577681299076; … ; 249.72986247348513 252.9162720651867 … 252.232903123629 244.19782743234276; 264.62505711595907 257.55400576599106 … 260.0656411956669 253.25510157969072], 1000000000)</code></pre>
+</div>
+</div>
+<p>Podemos observar que el tiempo en el que incrementó fue apróximadamente de un orden más respecto de <span class="math inline">\(n=300\)</span> y el número de asignaciones permanece constante</p>
+</section>
+<section id="experimento-para-matrices-dispersas" class="level2">
+<h2 class="anchored" data-anchor-id="experimento-para-matrices-dispersas">Experimento para matrices dispersas</h2>
+<div id="a20f1f5d-da35-43f2-a32b-8127873830c4" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">sprand</span>(<span class="fl">1000</span>, <span class="fl">1000</span>, <span class="fl">0.01</span>)  <span class="co"># Matriz 1000x1000 con 1% de elementos no ceros</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="fu">sprand</span>(<span class="fl">1000</span>, <span class="fl">1000</span>, <span class="fl">0.01</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiplicación de matrices</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>C, operaciones <span class="op">=</span> <span class="fu">multiplicar_matrices</span>(A, B)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar el número de operaciones realizadas</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Número de operaciones realizadas: </span><span class="sc">$</span>operaciones<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Número de operaciones realizadas: 1000000000</code></pre>
+</div>
+</div>
+<div id="24914007-26a2-4baa-bafb-90b9d658c916" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@btime</span> <span class="fu">multiplicar_matrices</span>(A, B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  21.248 s (4 allocations: 7.63 MiB)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<pre><code>([0.0 0.5179738303041588 … 0.0 0.0; 0.0 0.0 … 0.0 0.28833088395964407; … ; 0.0 0.0 … 0.0 0.0; 0.0 0.0 … 0.0 0.0], 1000000000)</code></pre>
+</div>
+</div>
+<p>Se observa que para <span class="math inline">\(n=1000\)</span> el tiempo de ejecución incrementa en un orden. Las asignaciones son constantes</p>
+</section>
+</section>
+<section id="algortimo-para-eliminación-gaussiana-gauss-jordan-para-matrices-aleatorias-de-tamaño-nn" class="level1">
+<h1>Algortimo para Eliminación gaussiana / Gauss-Jordan para matrices aleatorias de tamaño <span class="math inline">\(n×n\)</span></h1>
+<section id="definición-y-prueba-del-algoritmo-1" class="level2">
+<h2 class="anchored" data-anchor-id="definición-y-prueba-del-algoritmo-1">Definición y prueba del algoritmo</h2>
+<p>En algebra lineal una de las aplicaciones del método de Gauss Jordan es su uso para encontrar la inversa de una matriz invertible <span class="math inline">\(nxn\)</span>, para lo cual el primer paso es agregar una matriz identidad a la derecha de la matriz inverible en forma de matriz aumentada y resolver el sistema por el método de Gauss Jordan. De acuerdo a Grossman &amp; Flores (2012), el método para realizar Gauss-Jordan con pivoteo consiste en:</p>
+<ol type="1">
+<li>Escribir el sistema en la forma de matriz aumentada. De la primer columna con componentes diferentes de cero (denominada columna pivote), seleccione la componente con el valor absoluto. Esta componente se denomina pivote:</li>
+<li>Reacomodar los renglones para mover el pivote hasta arriba:</li>
+<li>Dividir el primer renglón entre el pivote:</li>
+<li>Sumar múltiplos del primer renglón a los otros renglones para hacer cero todas las componentes de la columna pivote:</li>
+<li>Tapar el primer renglón y realice los pasos 1 al 4 en la submatriz que resulta:</li>
+<li>Continuar de esta manera hasta que la matriz esté en la forma escalonada por renglones.</li>
+<li>Resolver el sistema</li>
+</ol>
+<p>Bajo este esquema se implementará el algoritmo.</p>
+</section>
+<section id="definición-y-prueba-del-algoritmo-2" class="level2">
+<h2 class="anchored" data-anchor-id="definición-y-prueba-del-algoritmo-2">Definición y prueba del algoritmo</h2>
+<div id="96e50c62-ce71-4cbd-8bf3-c48f4b9b17b5" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear una matriz aleatoria invertible de tamaño n x n</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">generar_matriz_invertible</span>(n)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="cn">true</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        A <span class="op">=</span> <span class="fu">rand</span>(n, n)  <span class="co"># Generamos una matriz aleatoria</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">det</span>(A) <span class="op">!=</span> <span class="fl">0</span>   <span class="co"># Verificamos que sea invertible</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> A</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">gauss_jordan</span>(A)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">size</span>(A, <span class="fl">1</span>)  <span class="co"># Tamaño de la matriz (nxn)</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    operaciones <span class="op">=</span> <span class="fl">0</span>  <span class="co"># Contador de operaciones</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convertimos A en una matriz aumentada con la identidad (para calcular la inversa)</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> <span class="fu">hcat</span>(A, <span class="fu">Matrix</span>(I, n, n))  <span class="co"># Agregamos la matriz identidad a la derecha para expresarla en forma de matriz aumentada</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Eliminación hacia adelante</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Pivoteo parcial (si es necesario)</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>        max <span class="op">=</span> <span class="fu">argmax</span>(<span class="fu">abs</span>.(A[i<span class="op">:</span>n, i])) <span class="op">+</span> (i <span class="op">-</span> <span class="fl">1</span>)  <span class="co"># Encuentra el máximo en la columna</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> max <span class="op">!=</span> i</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>            A[i, <span class="op">:</span>], A[max, <span class="op">:</span>] <span class="op">=</span> A[max, <span class="op">:</span>], A[i, <span class="op">:</span>]  <span class="co"># Intercambia filas</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>            operaciones <span class="op">+=</span> n  <span class="co"># Contamos el intercambio de filas</span></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Normalizar el pivote a 1</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>        pivote <span class="op">=</span> A[i, i]</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>        A[i, <span class="op">:</span>] <span class="op">/=</span> pivote</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>        operaciones <span class="op">+=</span> n  <span class="co"># División de toda la fila</span></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Eliminación de los elementos debajo y arriba del pivote</span></span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> j <span class="op">!=</span> i  <span class="co"># Evitar la fila del pivote</span></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>                factor <span class="op">=</span> A[j, i]</span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>                A[j, <span class="op">:</span>] <span class="op">-=</span> factor <span class="op">*</span> A[i, <span class="op">:</span>]</span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>                operaciones <span class="op">+=</span> n  <span class="co"># Contamos la operación de eliminación</span></span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># La parte derecha de A ahora es la matriz inversa</span></span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> A[<span class="op">:</span>, n<span class="op">+</span><span class="fl">1</span><span class="op">:</span><span class="kw">end</span>], operaciones</span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<pre><code>gauss_jordan (generic function with 1 method)</code></pre>
+</div>
+</div>
+<p>Una vez definidas las funciones podemos realizar una validación simple para una matriz pequeña de orden 3x3.</p>
+<div id="f44de6b4-098f-413d-a4d8-31418abd7555" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prueba con una matriz 3x3</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">3</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">generar_matriz_invertible</span>(n)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicamos Gauss-Jordan para encontrar la inversa</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>A_inv, operaciones <span class="op">=</span> <span class="fu">gauss_jordan</span>(A)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar resultados</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Matriz A:"</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(A)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Matriz Inversa A^-1:"</span>)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(A_inv)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Número de operaciones realizadas: </span><span class="sc">$</span>operaciones<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Matriz A:
+[0.7176888293553598 0.1159503346927897 0.7824477172960047; 0.26816290254571196 0.5436422839447754 0.09663661895942965; 0.5776198687754796 0.502034634542894 0.6842905799728082]
+Matriz Inversa A^-1:
+[4.201278869398719 4.071118358154523 -5.378855536411074; -1.6582303726782912 0.5084526591919578 1.8242884828509491; -2.32978959049701 -3.809521529362638 4.663337360923403]
+Número de operaciones realizadas: 27</code></pre>
+</div>
+</div>
+<p>Se corrobora que el algoritmo funciona correctamente. También desde este momento podemos observar que el número de operaciones realizadas para <span class="math inline">\(n=3\)</span> es de 27, es decir <span class="math inline">\(3^3\)</span></p>
+</section>
+<section id="evaluación-para-n100-1" class="level2">
+<h2 class="anchored" data-anchor-id="evaluación-para-n100-1">Evaluación para <span class="math inline">\(n=100\)</span></h2>
+<div id="ef47fc16-9ac6-4443-b51b-884dc60c52a7" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Experimento para n=100</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">100</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">generar_matriz_invertible</span>(n)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>A_inv, operaciones <span class="op">=</span> <span class="fu">gauss_jordan</span>(A)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Número de operaciones realizadas: </span><span class="sc">$</span>operaciones<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Número de operaciones realizadas: 1009600</code></pre>
+</div>
+</div>
+<p>Se puede observar que el número de operaciones realizadas cuando <span class="math inline">\(n=100\)</span> es de apróximadamente 1,000,000 es decir <span class="math inline">\(100^3\)</span></p>
+<div id="b57ff0ea-212f-459d-95e0-41d9976e782b" class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@btime</span> <span class="fu">gauss_jordan</span>(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  7.225 ms (80394 allocations: 63.79 MiB)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<pre><code>([0.28970373469019167 -0.17420484581562626 … 0.27307472669636884 -0.3588290552142628; 0.11215087930590079 -0.25156162543991023 … 0.14969481586464503 -0.4030287746902638; … ; -0.0754963833616388 -0.10535739685169299 … 0.078313017746731 -0.22571431989707574; -0.04624036046053944 0.34960007812129645 … 0.02804706715744275 -0.30342600533361846], 1009600)</code></pre>
+</div>
+</div>
+</section>
+<section id="evaluación-para-n300-1" class="level2">
+<h2 class="anchored" data-anchor-id="evaluación-para-n300-1">Evaluación para <span class="math inline">\(n=300\)</span></h2>
+<div id="85857941-540a-48f7-9b3c-8f08ac4aeb5e" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Experimento para n=300</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">300</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">generar_matriz_invertible</span>(n)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>A_inv, operaciones <span class="op">=</span> <span class="fu">gauss_jordan</span>(A)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Número de operaciones realizadas: </span><span class="sc">$</span>operaciones<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Número de operaciones realizadas: 27087900</code></pre>
+</div>
+</div>
+<p>Se puede observar que el número de operaciones realizadas cuando <span class="math inline">\(n=300\)</span> es de apróximadamente 27,000,000 es decir <span class="math inline">\(100^3\)</span></p>
+<div id="f7e47d94-ef99-4dd1-bb42-1379f9e26583" class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@btime</span> <span class="fu">gauss_jordan</span>(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  332.074 ms (1081266 allocations: 1.63 GiB)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>([0.2446861370288894 0.2603838908496686 … 0.9280233428073322 0.09375809661532152; 0.1298458317229163 0.12987395132258728 … 0.35016998210347056 0.01506863357009279; … ; 0.13790527314543724 0.35112067320686813 … 0.026894330076987827 -0.13166694676382443; 0.07039322841938805 -0.06504029318774748 … 0.5015589283627557 0.039208192096636965], 27087900)</code></pre>
+</div>
+</div>
+<p>El tiempo de ejecución aumenta aproximadamente en dos órdenes respecto a <span class="math inline">\(n=100\)</span> lo mismo sucede para las asignaciones</p>
+</section>
+<section id="evaluación-para-n1000-1" class="level2">
+<h2 class="anchored" data-anchor-id="evaluación-para-n1000-1">Evaluación para <span class="math inline">\(n=1000\)</span></h2>
+<div id="ebf1c18f-22ec-48ef-a919-e4f9dd878ead" class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Experimento para n=1000</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">1000</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">generar_matriz_invertible</span>(n)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>A_inv, operaciones <span class="op">=</span> <span class="fu">gauss_jordan</span>(A)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Número de operaciones realizadas: </span><span class="sc">$</span>operaciones<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Número de operaciones realizadas: 1000994000</code></pre>
+</div>
+</div>
+<p>Se puede observar que el número de operaciones realizadas cuando <span class="math inline">\(n=1000\)</span> es de apróximadamente 1,000,000,000 es decir <span class="math inline">\(1000^3\)</span></p>
+<div id="cc1df34d-08d9-4730-b1e9-1e3607889585" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@btime</span> <span class="fu">gauss_jordan</span>(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  30.021 s (12005472 allocations: 59.87 GiB)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<pre><code>([0.047490859301975295 -0.060854470450899374 … -0.12558169672686376 0.1434304526853882; -0.1200956782253656 -0.428885355426993 … -0.013085833224851684 0.30326859892872826; … ; 1.7067673603290574 1.0086591100969922 … -0.831195709124633 -0.3635885587092932; 1.237672201837348 0.8858751875164227 … -0.7664065225726228 -0.16137824678541648], 1000994000)</code></pre>
+</div>
+</div>
+<p>El tiempo de ejecución aumenta aproximadamente en dos órdenes respecto a <span class="math inline">\(n=300\)</span> las asignaciones incrementan en un orden</p>
+</section>
+<section id="experimento-para-matrices-dispersas-1" class="level2">
+<h2 class="anchored" data-anchor-id="experimento-para-matrices-dispersas-1">Experimento para matrices dispersas</h2>
+<p>Bajor la misma lógica que se evaluó este algoritmo se generará una matriz dispersa tamaño <span class="math inline">\(nxn\)</span> que sea invertible.</p>
+<div id="cf69cce5-c482-46a8-86fe-a4583618fcd3" class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span>, <span class="bu">LinearAlgebra</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">generar_matriz_invertible_dispersada</span>(n<span class="op">::</span><span class="dt">Int</span>, densidad<span class="op">::</span><span class="dt">Float64</span>)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Primero generamos una matriz dispersa aleatoria de tamaño n x n</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> <span class="fu">sprandn</span>(n, n, <span class="fl">0.01</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hacemos la matriz simétrica A = A + A^T para asegurar que sea simétrica</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> A <span class="op">+</span> <span class="fu">transpose</span>(A)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Añadimos una constante al diagonal para asegurar que sea positiva definida</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Esto ayuda a evitar que tenga autovalores no positivos</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>        A[i,i] <span class="op">+=</span> n  <span class="co"># Incrementamos la diagonal para garantizar la positividad</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># A es ahora simétrica y positiva definida, y como es dispersa, debería ser invertible</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> A</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<pre><code>generar_matriz_invertible_dispersada (generic function with 1 method)</code></pre>
+</div>
+</div>
+<div id="b60cc8d9-cec5-420d-97de-d3363c0834b3" class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Experimento para n=1000</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="fl">1000</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> <span class="fu">generar_matriz_invertible</span>(n)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>A_inv, operaciones <span class="op">=</span> <span class="fu">gauss_jordan</span>(A)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="st">"Número de operaciones realizadas: </span><span class="sc">$</span>operaciones<span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Número de operaciones realizadas: 1000987000</code></pre>
+</div>
+</div>
+<p>Observarmos que el número de operaciones continua siendo aproximadamente <span class="math inline">\(n^3\)</span></p>
+<div id="136bb46d-47b2-47aa-8727-16ecd7a968e3" class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">BenchmarkTools</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="pp">@btime</span> <span class="fu">gauss_jordan</span>(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  31.942 s (12005430 allocations: 59.87 GiB)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<pre><code>([-0.286088270150775 -0.04415745714555952 … -0.02341198529697472 -0.060345876344513556; -0.6395347509959397 0.20227489477122187 … 0.015799245413789784 -0.0076372936972852745; … ; -0.10946769430792393 0.008548864678396426 … -0.007695531472638406 -0.08864286022847348; -0.21194227741102356 0.08071600512590583 … 0.009539117934955094 -0.04134071560159264], 1000987000)</code></pre>
+</div>
+</div>
+<p>No se notó una diferencia significativa en tiempo de ejecución ni en asignaciones</p>
+</section>
+</section>
+<section id="discusión-y-conclusiones" class="level1">
+<h1>Discusión y conclusiones</h1>
+<p>Del experimento podemos concluir que el orden de crecimiento para el algoritmo del método tradicional de multiplicación de matrices como para el algoritmo de eliminación gaussiana es de <span class="math inline">\(O(n^3)\)</span>. Este resultado es previsible ya que está bien documentado. Sin embargo, se debe apuntar que para los algoritmos de multiplicación de matrices el mínimo exponente para multiplicar matrices <span class="math inline">\(nxn\)</span> oscila entre 2 y 3 (Anderson &amp; Barman, 2009) y al día de hoy existen múltiples algoritmos, de un orden menor al tradicional, siendo uno de los más conocidos el algoritmo de Strassen (1969) de orden <span class="math inline">\(O(n^{2.81})\)</span>, el cual se basa en el método de “Divide y vencerás” (Cormen et al.&nbsp;2022). Sin embargo estos algoritmos van más allá del alcance de este reporte.</p>
+<p>Si bien ambos algoritmos poseen un orden de crecimiento igual, el algoritmo de eliminación gaussiana, plantea una problemática adicional que es el número de asignaciones, estas son muy altas lo que se interpreta como que Julia está creando múltiples copias de matrices, mientras que en el algoritmo de multiplicación de matrices se aprecia un número de asignaciones constante. Esta discrepacia en los algoritmos afecta directamente los tiempos de ejecución los costos en memoria para el algoritmo de eliminación gaussiana.</p>
+<p>Finalmente el experimento haciendo uso de matrices dispersas demostró que el tiempo de ejecución fue mayor para una misma entrada <span class="math inline">\(n=1000\)</span>, para el algoritmo de multiplicación de matrices, mientras que para el algoritmo de eliminación gaussiana no demostró diferencias significativas.</p>
+<section id="cuál-es-el-impacto-de-acceder-los-elementos-contiguos-en-memoria-de-una-matriz" class="level2">
+<h2 class="anchored" data-anchor-id="cuál-es-el-impacto-de-acceder-los-elementos-contiguos-en-memoria-de-una-matriz">¿Cuál es el impacto de acceder los elementos contiguos en memoria de una matriz?</h2>
+<p>El acceso a los elementos contiguos en memoria de una matriz podría tener un impacto significativo en los tiempos de ejecución de los algoritmos.Cuando accedes a elementos contiguos en memoria (por ejemplo, en un orden fila-por-fila o columna-por-columna), se puede aprovechar la memoria caché, para acceder a estos y que no tengan que ser cargados desde la memoria principal, que es más lenta.</p>
+</section>
+<section id="qué-cambiarías-si-utilizas-matrices-dispersas-cuáles-serían-los-costos" class="level2">
+<h2 class="anchored" data-anchor-id="qué-cambiarías-si-utilizas-matrices-dispersas-cuáles-serían-los-costos">¿Qué cambiarías si utilizas matrices dispersas? ¿Cuáles serían los costos?</h2>
+<p>Como se pudo corroborar en los experimentos el uso de matrices dispersas se comportó distinto para cada algoritmo, para el de multiplicación incrementó los tiempos de ejecución, mientras que para el de eliminación gaussiana no tuvo diferencias considerables para <span class="math inline">\(n=1000\)</span></p>
+</section>
+</section>
+<section id="referencias" class="level1">
+<h1>Referencias</h1>
+<p>Anderson, M., &amp; Barman, S. (2009, diciembre 6). The Coppersmith-Winograd Matrix Multiplication Algorithm.</p>
+<p>Cormen, Thomas H.; Leiserson, Charles E.; Rivest, Ronald L.; Stein, Clifford (2022). Introduction to Algorithms (2nd ed.). MIT Press.</p>
+<p>Grossman, S. I., &amp; Flores, J. J. (2012). Álgebra lineal (7a ed.). McGraw-Hill.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

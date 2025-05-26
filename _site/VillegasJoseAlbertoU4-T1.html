@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4A. Reporte escrito. Experimentos y análisis de algoritmos de búsqueda por comparación. – AnalisisAlgoritmos2025</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">AnalisisAlgoritmos2025</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#lista-de-cambios" id="toc-lista-de-cambios" class="nav-link active" data-scroll-target="#lista-de-cambios">Lista de cambios:</a>
+  <ul class="collapse">
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción">Introducción</a></li>
+  <li><a href="#ordenamiento-previo" id="toc-ordenamiento-previo" class="nav-link" data-scroll-target="#ordenamiento-previo">Ordenamiento previo</a></li>
+  <li><a href="#búsqueda-binaria-acotada" id="toc-búsqueda-binaria-acotada" class="nav-link" data-scroll-target="#búsqueda-binaria-acotada">Búsqueda binaria acotada</a></li>
+  <li><a href="#búsqueda-secuencial-o-lineal-b_0" id="toc-búsqueda-secuencial-o-lineal-b_0" class="nav-link" data-scroll-target="#búsqueda-secuencial-o-lineal-b_0">Búsqueda secuencial o lineal <span class="math inline">\(B_0\)</span></a></li>
+  <li><a href="#búsqueda-no-acotada-b_1" id="toc-búsqueda-no-acotada-b_1" class="nav-link" data-scroll-target="#búsqueda-no-acotada-b_1">Búsqueda no acotada <span class="math inline">\(B_1\)</span></a></li>
+  <li><a href="#búsqueda-no-acotada-b_2" id="toc-búsqueda-no-acotada-b_2" class="nav-link" data-scroll-target="#búsqueda-no-acotada-b_2">Búsqueda no acotada <span class="math inline">\(B_2\)</span></a></li>
+  <li><a href="#búsqueda-mediante-la-estructura-de-datos-skiplist" id="toc-búsqueda-mediante-la-estructura-de-datos-skiplist" class="nav-link" data-scroll-target="#búsqueda-mediante-la-estructura-de-datos-skiplist">Búsqueda mediante la estructura de datos SkipList</a></li>
+  <li><a href="#discusión-y-resultados" id="toc-discusión-y-resultados" class="nav-link" data-scroll-target="#discusión-y-resultados">Discusión y resultados</a>
+  <ul class="collapse">
+  <li><a href="#tabla.-1-tiempo-de-ejecución-en-segundos-de-cada-lista-de-consultas-con-su-respectivo-orden-de-magnitud-para-cada-algoritmo." id="toc-tabla.-1-tiempo-de-ejecución-en-segundos-de-cada-lista-de-consultas-con-su-respectivo-orden-de-magnitud-para-cada-algoritmo." class="nav-link" data-scroll-target="#tabla.-1-tiempo-de-ejecución-en-segundos-de-cada-lista-de-consultas-con-su-respectivo-orden-de-magnitud-para-cada-algoritmo.">Tabla. 1 Tiempo de ejecución en segundos de cada lista de consultas con su respectivo orden de magnitud para cada algoritmo.</a></li>
+  <li><a href="#tabla.-2-número-de-comparaciones-realizadas-de-cada-lista-de-consultas-con-su-respectivo-orden-de-magnitud-para-cada-algoritmo." id="toc-tabla.-2-número-de-comparaciones-realizadas-de-cada-lista-de-consultas-con-su-respectivo-orden-de-magnitud-para-cada-algoritmo." class="nav-link" data-scroll-target="#tabla.-2-número-de-comparaciones-realizadas-de-cada-lista-de-consultas-con-su-respectivo-orden-de-magnitud-para-cada-algoritmo.">Tabla. 2 Número de comparaciones realizadas de cada lista de consultas con su respectivo orden de magnitud para cada algoritmo.</a></li>
+  <li><a href="#búsqueda-binaria" id="toc-búsqueda-binaria" class="nav-link" data-scroll-target="#búsqueda-binaria">1. Búsqueda Binaria</a></li>
+  <li><a href="#búsqueda-no-acotada-secuencial-b_0" id="toc-búsqueda-no-acotada-secuencial-b_0" class="nav-link" data-scroll-target="#búsqueda-no-acotada-secuencial-b_0">2. Búsqueda no acotada Secuencial (<span class="math inline">\(B_0\)</span>)</a></li>
+  <li><a href="#búsqueda-no-acotada-b_1-1" id="toc-búsqueda-no-acotada-b_1-1" class="nav-link" data-scroll-target="#búsqueda-no-acotada-b_1-1">3. Búsqueda no acotada (<span class="math inline">\(B_1\)</span>)</a></li>
+  <li><a href="#búsqueda-no-acotada-b_2-1" id="toc-búsqueda-no-acotada-b_2-1" class="nav-link" data-scroll-target="#búsqueda-no-acotada-b_2-1">4. Búsqueda no acotada (<span class="math inline">\(B_2\)</span>)</a></li>
+  </ul></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión">Conclusión</a></li>
+  <li><a href="#bibliografía" id="toc-bibliografía" class="nav-link" data-scroll-target="#bibliografía">Bibliografía</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">4A. Reporte escrito. Experimentos y análisis de algoritmos de búsqueda por comparación.</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>José Alberto Villegas Díaz Disciplina</p>
+<section id="lista-de-cambios" class="level1">
+<h1>Lista de cambios:</h1>
+<p>Se corrigó el algoritmo de búsqueda secuencial, lo que mejoró considerablemente su desempeño Se detalló de manera correcta la complejidad de <span class="math inline">\(B1\)</span> y <span class="math inline">\(B2\)</span> que es <span class="math inline">\(O(log p)\)</span> donde <span class="math inline">\(p\)</span> es la posición de inserción</p>
+<section id="introducción" class="level2">
+<h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<p>Knuth (1998) señala que el problema de búsqueda consiste en encontrar datos almacenados a partir de una identificación única, conocida como clave. Dado un conjunto de <span class="math inline">\(N\)</span> registros, el objetivo es localizar aquel que contiene la clave proporcionada.</p>
+<p>En este reporte, se implementan y comparan cinco algoritmos de búsqueda por comparación:</p>
+<ol type="1">
+<li><strong>Búsqueda binaria acotada</strong>: Un método eficiente para buscar en arreglos ordenados, con complejidad <span class="math inline">\(O(\log n)\)</span>.<br>
+</li>
+<li><strong>Búsqueda secuencial B0 (búsqueda unaria)</strong>: Una búsqueda lineal simple que examina cada elemento secuencialmente hasta encontrar el objetivo, con complejidad en el peor caso <span class="math inline">\(O(n)\)</span>.<br>
+</li>
+<li><strong>Búsqueda no acotada B1 (doubling search/galloping)</strong>: Una técnica que combina búsqueda lineal con saltos exponenciales para localizar un intervalo antes de aplicar búsqueda binaria, útil cuando el tamaño del conjunto de datos es desconocido.<br>
+</li>
+<li><strong>Búsqueda no acotada B2 (doubling-doubling search)</strong>: Una variante más agresiva de la búsqueda B1, que incrementa el tamaño de los saltos de manera más rápida para reducir el número de comparaciones.<br>
+</li>
+<li><strong>Búsqueda mediante SkipList</strong>: Una estructura de datos probabilística que permite búsquedas eficientes con complejidad esperada <span class="math inline">\(O(\log n)\)</span>.</li>
+</ol>
+<p>El objetivo de este estudio es analizar el rendimiento de estos algoritmos bajo diferentes condiciones, evaluando su eficiencia en términos de tiempo de ejecución y número de comparaciones realizadas. A través de experimentos controlados, se busca determinar en qué escenarios cada algoritmo ofrece el mejor desempeño, considerando tanto entornos acotados (donde el tamaño del conjunto de datos es conocido) como no acotados (donde el tamaño es dinámico o desconocido).</p>
+<p>Los resultados obtenidos proporcionarán insights valiosos sobre las ventajas y desventajas de cada método, permitiendo una selección informada del algoritmo más adecuado según los requisitos específicos de una aplicación dada.</p>
+</section>
+<section id="ordenamiento-previo" class="level2">
+<h2 class="anchored" data-anchor-id="ordenamiento-previo">Ordenamiento previo</h2>
+<p>Para el correcto funcionamiento de los algoritmos de búsqueda, es necesario que las listas de posteo dónde realizaremos dichas búsquedas estén ordenadas. Por lo que se utilizará el algoritmo de ordenamiento “heapsort” mismo que demostró una mayor eficiencia para el ordenamiento de estas listas de posteo en el “Reporte 3.A Experimentos y análisis de algoritmos de ordenamiento”.</p>
+<div id="ff82e35a-14b9-4699-aef4-c8a09186cc88" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JSON</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Dates</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para ajustar el montículo (heapify) - Índices basados en 1</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">heapify!</span>(arr, n, i)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    largest <span class="op">=</span> i</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    left <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> i      <span class="co"># Hijo izquierdo (ajustado para base 1)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    right <span class="op">=</span> <span class="fl">2</span> <span class="op">*</span> i <span class="op">+</span> <span class="fl">1</span> <span class="co"># Hijo derecho (ajustado para base 1)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Comparar con el hijo izquierdo</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> left <span class="op">&lt;=</span> n <span class="op">&amp;&amp;</span> arr[left] <span class="op">&gt;</span> arr[largest]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        largest <span class="op">=</span> left</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Comparar con el hijo derecho</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> right <span class="op">&lt;=</span> n <span class="op">&amp;&amp;</span> arr[right] <span class="op">&gt;</span> arr[largest]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        largest <span class="op">=</span> right</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Si el mayor no es la raíz, intercambiar y seguir ajustando</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> largest <span class="op">!=</span> i</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        arr[i], arr[largest] <span class="op">=</span> arr[largest], arr[i]</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="fu">heapify!</span>(arr, n, largest)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Implementación de HeapSort - Índices basados en 1</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">heapsort!</span>(arr)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(arr)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Construir el max-heap</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> n <span class="op">÷</span> <span class="fl">2</span><span class="op">:-</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="fu">heapify!</span>(arr, n, i)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extraer elementos del heap uno por uno</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> n<span class="op">:-</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>        arr[<span class="fl">1</span>], arr[i] <span class="op">=</span> arr[i], arr[<span class="fl">1</span>]  <span class="co"># Mover la raíz al final</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        <span class="fu">heapify!</span>(arr, i <span class="op">-</span> <span class="fl">1</span>, <span class="fl">1</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> arr</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para cargar y ordenar el archivo JSON</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">ordenar_json</span>(p<span class="op">::</span><span class="dt">String</span>)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Construir la ruta del archivo</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    ruta_archivo <span class="op">=</span> <span class="fu">joinpath</span>(<span class="fu">homedir</span>(), <span class="st">raw"C:\Users\josea\Downloads\listas-posteo-con-perturbaciones"</span>, </span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"listas-posteo-con-perturbaciones-p="</span> <span class="op">*</span> p <span class="op">*</span> <span class="st">".json"</span>)</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cargar el archivo JSON</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    datos <span class="op">=</span> JSON.<span class="fu">parsefile</span>(ruta_archivo)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ordenar cada lista en el archivo JSON</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (clave, arr) <span class="kw">in</span> datos</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        <span class="fu">heapsort!</span>(arr)</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Devolver los datos ordenados</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> datos</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>ordenar_json (generic function with 1 method)</code></pre>
+</div>
+</div>
+<div id="952395c0-4cba-46d9-8541-a952df1ffdcf" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Como son las mismas listas con diferentes niveles de desorden basta con que tomemos un archivo (el de menor perturbación)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>lista <span class="op">=</span> <span class="fu">ordenar_json</span>(<span class="st">"016"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>Dict{String, Any} with 100 entries:
+  "reunion"      =&gt; Any[260, 275, 294, 296, 314, 317, 341, 384, 457, 529  …  49…
+  "virtual"      =&gt; Any[45, 47, 63, 97, 255, 291, 295, 310, 327, 370  …  49582,…
+  "julio"        =&gt; Any[25, 31, 74, 260, 297, 341, 361, 404, 434, 443  …  47540…
+  "votos"        =&gt; Any[66, 86, 102, 311, 330, 334, 462, 560, 637, 655  …  4483…
+  "propuesta"    =&gt; Any[37, 3109, 3637, 3676, 4013, 4015, 4021, 4027, 4046, 404…
+  "nacional"     =&gt; Any[260, 262, 267, 269, 272, 273, 281, 282, 289, 294  …  49…
+  "electoral"    =&gt; Any[65, 132, 170, 190, 208, 310, 578, 591, 701, 745  …  472…
+  "@m_ebrard"    =&gt; Any[351, 359, 366, 623, 1745, 1983, 2838, 2923, 3360, 3538 …
+  "jovenes"      =&gt; Any[22, 191, 192, 195, 196, 213, 220, 245, 350, 365  …  486…
+  "_num"         =&gt; Any[25, 31, 32, 37, 52, 62, 66, 74, 91, 92  …  49972, 49974…
+  "aqui"         =&gt; Any[19, 52, 92, 299, 315, 504, 598, 659, 678, 776  …  49079…
+  "mayor"        =&gt; Any[54, 290, 423, 701, 887, 1107, 1148, 1379, 1617, 1719  ……
+  "#envivo"      =&gt; Any[11, 15, 19, 24, 39, 58, 59, 63, 73, 81  …  49613, 49618…
+  "👉"           =&gt; Any[30, 31, 87, 295, 365, 504, 557, 600, 838, 964  …  49442…
+  "mexico"       =&gt; Any[10, 13, 14, 15, 21, 25, 27, 30, 36, 40  …  49806, 49835…
+  "@epn"         =&gt; Any[3, 12, 46, 224, 260, 262, 269, 272, 273, 281  …  49862,…
+  "poder"        =&gt; Any[37, 314, 374, 671, 767, 817, 888, 908, 943, 984  …  488…
+  "pri"          =&gt; Any[52, 92, 168, 233, 564, 627, 657, 671, 692, 698  …  4887…
+  "encuentro"    =&gt; Any[716, 1036, 1060, 1209, 1256, 3285, 3573, 3632, 3716, 37…
+  "pena"         =&gt; Any[12, 26, 66, 98, 102, 265, 270, 275, 285, 294  …  49904,…
+  "gano"         =&gt; Any[49, 153, 183, 304, 369, 490, 527, 584, 597, 602  …  470…
+  "reune"        =&gt; Any[3173, 3208, 3628, 3913, 4478, 4502, 4662, 4673, 4699, 4…
+  "plan"         =&gt; Any[202, 1209, 1351, 3109, 3730, 3863, 4218, 4259, 4261, 43…
+  "presidencial" =&gt; Any[12, 16, 47, 63, 132, 145, 242, 259, 317, 450  …  48944,…
+  "resultados"   =&gt; Any[1, 31, 49, 50, 153, 162, 237, 241, 242, 251  …  45776, …
+  ⋮              =&gt; ⋮</code></pre>
+</div>
+</div>
+<div id="d4d900bf-308e-483e-af81-fa65d00de3d9" class="cell" data-scrolled="true" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar listas de consultas</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>consultas1 <span class="op">=</span> JSON.<span class="fu">parsefile</span>(<span class="fu">joinpath</span>(<span class="fu">homedir</span>(), <span class="st">raw"C:\Users\josea\Downloads\consultas-1-listas-posteo.json"</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>consultas2 <span class="op">=</span> JSON.<span class="fu">parsefile</span>(<span class="fu">joinpath</span>(<span class="fu">homedir</span>(), <span class="st">raw"C:\Users\josea\Downloads\consultas-2-listas-posteo.json"</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>consultas3 <span class="op">=</span> JSON.<span class="fu">parsefile</span>(<span class="fu">joinpath</span>(<span class="fu">homedir</span>(), <span class="st">raw"C:\Users\josea\Downloads\consultas-3-listas-posteo.json"</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>consultas4 <span class="op">=</span> JSON.<span class="fu">parsefile</span>(<span class="fu">joinpath</span>(<span class="fu">homedir</span>(), <span class="st">raw"C:\Users\josea\Downloads\consultas-4-listas-posteo.json"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>10000-element Vector{Any}:
+ 39835
+ 37103
+ 20584
+ 11036
+  3086
+ 26699
+  9561
+ 36445
+  2853
+ 27873
+  2216
+  1500
+ 48987
+     ⋮
+  4218
+ 23841
+ 38354
+ 40129
+ 20626
+ 32118
+ 42722
+ 20874
+ 47462
+ 37764
+ 29520
+ 10134</code></pre>
+</div>
+</div>
+<div id="19d55423-0e58-4255-8d25-99b544eee35f" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Inspeccionamos de manera general las características de las listas de consulta. </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="fu">length</span>(consultas1))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="fu">length</span>(consultas2))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="fu">length</span>(consultas3))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="fu">length</span>(consultas4))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>10000
+10000
+10000
+10000</code></pre>
+</div>
+</div>
+<div id="be9936c9-3186-4ec1-b44b-ba3882d7cc58" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(consultas1[<span class="fl">1</span><span class="op">:</span><span class="fl">20</span>])</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(consultas2[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>])</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(consultas3[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>])</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(consultas4[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Any[5, 12, 3, 2, 4, 3, 15, 1, 4, 14, 5, 3, 14, 9, 3, 4, 1, 12, 13, 5]
+Any[200, 229, 46, 186, 58, 183, 208, 212, 162, 72]
+Any[694, 555, 2078, 3674, 667, 1144, 2329, 1163, 3398, 3291]
+Any[39835, 37103, 20584, 11036, 3086, 26699, 9561, 36445, 2853, 27873]</code></pre>
+</div>
+</div>
+<p>De lo anterior podemos darnos cuenta que las listas de consulta constan del mismo número de elementos, con la particularidad que los elementos de las listas aumentan en uno o dos órdenes de magnitud consecutivamente. De tal manera que la primera lista contiene elementos de orden de <span class="math inline">\(10^0\)</span> a <span class="math inline">\(10^1\)</span> y la última elementos de <span class="math inline">\(10^3\)</span> y <span class="math inline">\(10^4\)</span></p>
+</section>
+<section id="búsqueda-binaria-acotada" class="level2">
+<h2 class="anchored" data-anchor-id="búsqueda-binaria-acotada">Búsqueda binaria acotada</h2>
+<p>De acuerdo con Knuth (1998), la <strong>búsqueda binaria</strong> es un algoritmo eficiente para encontrar un elemento en una lista ordenada. Funciona comparando el valor buscado <span class="math inline">\(K\)</span> con el elemento central de la lista:</p>
+<ol type="1">
+<li>Si <span class="math inline">\(K\)</span> es igual al valor medio, la búsqueda finaliza con éxito.<br>
+</li>
+<li>Si <span class="math inline">\(K\)</span> es menor, se repite la búsqueda en la mitad inferior de la lista.<br>
+</li>
+<li>Si <span class="math inline">\(K\)</span> es mayor, se repite en la mitad superior.</li>
+</ol>
+<p>Este proceso se repite hasta encontrar el elemento o determinar que no está en la lista.</p>
+<p>Algoritmo</p>
+<p>Dada una lista ordenada con claves <span class="math inline">\(K_1, K_2, \dots, K_N\)</span>, el algoritmo se describe así:</p>
+<ul>
+<li><strong>Inicialización:</strong> Definir los límites <span class="math inline">\(l = 1\)</span> y <span class="math inline">\(u = N\)</span>.<br>
+</li>
+<li><strong>Bucle:</strong> Mientras <span class="math inline">\(l \leq u\)</span>:
+<ul>
+<li>Calcular el punto medio: <span class="math inline">\(i = \lfloor (l + u)/2 \rfloor\)</span>.<br>
+</li>
+<li>Si <span class="math inline">\(K = K_i\)</span>, retornar éxito.<br>
+</li>
+<li>Si <span class="math inline">\(K &lt; K_i\)</span>, actualizar <span class="math inline">\(u = i - 1\)</span>.<br>
+</li>
+<li>Si <span class="math inline">\(K &gt; K_i\)</span>, actualizar <span class="math inline">\(l = i + 1\)</span>.<br>
+</li>
+</ul></li>
+<li><strong>Si el bucle termina sin éxito, el elemento no está en la lista.</strong></li>
+</ul>
+<p>Complejidad $ O(n) $</p>
+<div id="b0f08a00-510e-4305-9cbd-6b8cf6f3e96a" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JSON</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">busqueda_binaria_acotada</span>(arr, valor, bajo, alto, contador)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> bajo <span class="op">&lt;=</span> alto</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        medio <span class="op">=</span> (bajo <span class="op">+</span> alto) <span class="op">÷</span> <span class="fl">2</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        contador[] <span class="op">+=</span> <span class="fl">1</span>  <span class="co"># Incrementar contador de comparaciones</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> arr[medio] <span class="op">==</span> valor</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> medio  <span class="co"># Valor encontrado</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elseif</span> arr[medio] <span class="op">&lt;</span> valor</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>            bajo <span class="op">=</span> medio <span class="op">+</span> <span class="fl">1</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>            alto <span class="op">=</span> medio <span class="op">-</span> <span class="fl">1</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="fl">1</span>  <span class="co"># Valor no encontrado</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">buscar_en_listas_ordenadas</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Contador de comparaciones (usamos un Ref para poder modificarlo en las funciones)</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    total_comparaciones <span class="op">=</span> <span class="fu">Ref</span>(<span class="fl">0</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Diccionario para guardar resultados por clave</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    resultados <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{String, Dict}</span>()</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (clave, arr) <span class="kw">in</span> datos_ordenados</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>        resultados_clave <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{Any, Any}</span>()</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        comparaciones_clave <span class="op">=</span> <span class="fl">0</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> elemento <span class="kw">in</span> elementos_a_buscar</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Realizar búsqueda binaria acotada</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>            posicion <span class="op">=</span> <span class="fu">busqueda_binaria_acotada</span>(arr, elemento, <span class="fl">1</span>, <span class="fu">length</span>(arr), total_comparaciones)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>            resultados_clave[elemento] <span class="op">=</span> posicion <span class="op">!=</span> <span class="op">-</span><span class="fl">1</span> ? <span class="st">"Encontrado en posición </span><span class="sc">$</span>posicion<span class="st">"</span> <span class="op">:</span> <span class="st">"No encontrado"</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>        resultados[clave] <span class="op">=</span> resultados_clave</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Devolver resultados y total de comparaciones</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados, total_comparaciones[]</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Función completa para cargar, ordenar y buscar</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">procesar_archivo_y_buscar</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Realizar búsquedas en las listas ordenadas del diccionario</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    resultados, total_comparaciones <span class="op">=</span> <span class="fu">buscar_en_listas_ordenadas</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"Total de comparaciones realizadas: </span><span class="sc">$</span>total_comparaciones<span class="st">"</span>)</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre><code>procesar_archivo_y_buscar (generic function with 1 method)</code></pre>
+</div>
+</div>
+<div id="e898ac68-4198-42fc-a198-9737d608b568" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JSON</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">busqueda_binaria_acotada</span>(arr, valor, bajo, alto, contador)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> bajo <span class="op">&lt;=</span> alto</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        medio <span class="op">=</span> (bajo <span class="op">+</span> alto) <span class="op">÷</span> <span class="fl">2</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        contador[] <span class="op">+=</span> <span class="fl">1</span>  <span class="co"># Incrementar contador de comparaciones</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> arr[medio] <span class="op">==</span> valor</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> medio  <span class="co"># Valor encontrado</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elseif</span> arr[medio] <span class="op">&lt;</span> valor</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>            bajo <span class="op">=</span> medio <span class="op">+</span> <span class="fl">1</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>            alto <span class="op">=</span> medio <span class="op">-</span> <span class="fl">1</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="fl">1</span>  <span class="co"># Valor no encontrado</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">buscar_en_listas_ordenadas</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Contador de comparaciones (usamos un Ref para poder modificarlo en las funciones)</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    total_comparaciones <span class="op">=</span> <span class="fu">Ref</span>(<span class="fl">0</span>)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Diccionario para guardar resultados por clave</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    resultados <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{String, Dict}</span>()</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (clave, arr) <span class="kw">in</span> datos_ordenados</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>        resultados_clave <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{Any, Any}</span>()</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        comparaciones_clave <span class="op">=</span> <span class="fl">0</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> elemento <span class="kw">in</span> elementos_a_buscar</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Realizar búsqueda binaria acotada</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>            posicion <span class="op">=</span> <span class="fu">busqueda_binaria_acotada</span>(arr, elemento, <span class="fl">1</span>, <span class="fu">length</span>(arr), total_comparaciones)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>            resultados_clave[elemento] <span class="op">=</span> posicion <span class="op">!=</span> <span class="op">-</span><span class="fl">1</span> ? <span class="st">"Encontrado en posición </span><span class="sc">$</span>posicion<span class="st">"</span> <span class="op">:</span> <span class="st">"No encontrado"</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>        resultados[clave] <span class="op">=</span> resultados_clave</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Devolver resultados y total de comparaciones</span></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados, total_comparaciones[]</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Función completa para cargar, ordenar y buscar</span></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">procesar_archivo_y_buscar</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Realizar búsquedas en las listas ordenadas del diccionario</span></span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    resultados, total_comparaciones <span class="op">=</span> <span class="fu">buscar_en_listas_ordenadas</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"Total de comparaciones realizadas: </span><span class="sc">$</span>total_comparaciones<span class="st">"</span>)</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre><code>procesar_archivo_y_buscar (generic function with 1 method)</code></pre>
+</div>
+</div>
+<div id="f996372c-f3ff-4f5b-81eb-4a1a4d4447f7" class="cell" data-scrolled="true" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar</span>(lista,(consultas1))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar</span>(lista,(consultas2))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar</span>(lista,(consultas3))</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar</span>(lista,(consultas4))</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total de comparaciones realizadas: 9658445
+  0.857163 seconds (1.27 M allocations: 26.252 MiB, 19.35% gc time, 9.43% compilation time)
+Total de comparaciones realizadas: 9810026
+  0.635125 seconds (1.25 M allocations: 26.321 MiB, 1.37% gc time, 0.50% compilation time)
+Total de comparaciones realizadas: 9999849
+  1.125757 seconds (20.15 M allocations: 352.905 MiB, 20.68% gc time)
+Total de comparaciones realizadas: 10052264
+  1.054306 seconds (22.81 M allocations: 393.393 MiB, 13.41% gc time)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<pre><code>Dict{String, Dict} with 100 entries:
+  "reunion"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "virtual"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "julio"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "votos"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "propuesta"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "nacional"     =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "electoral"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "@m_ebrard"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "jovenes"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "_num"         =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 4212", 4700=&gt;…
+  "aqui"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "mayor"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "#envivo"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "👉"           =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "mexico"       =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "@epn"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "poder"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "pri"          =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "encuentro"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "pena"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "gano"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "reune"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "plan"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "presidencial" =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "resultados"   =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  ⋮              =&gt; ⋮</code></pre>
+</div>
+</div>
+<p>De lo anterior podemos observar el número de comparaciones y los tiempos de ejecución permanecieron relativamente constantes, con una variación mínima. Esto es de esperarse ya que el algortimo de búsqueda binaria tine una complejidad de <span class="math inline">\(O(\log n)\)</span>. Sin embargo, sí se observa un incremento considerable número de asignaciones, esto se puede atribuir al tamaño de los números que integran las listas de consulta.</p>
+</section>
+<section id="búsqueda-secuencial-o-lineal-b_0" class="level2">
+<h2 class="anchored" data-anchor-id="búsqueda-secuencial-o-lineal-b_0">Búsqueda secuencial o lineal <span class="math inline">\(B_0\)</span></h2>
+<p>De acuerdo con Knuth (1998) Dada una tabla de registros <span class="math inline">\(R_1, R_2, \dots, R_N\)</span>, cuyas claves respectivas son <span class="math inline">\(K_1, K_2, \dots, K_N\)</span>, este algoritmo busca un argumento dado <span class="math inline">\(K\)</span>. Suponemos que <span class="math inline">\(N \geq 1\)</span>.</p>
+<ol type="1">
+<li><strong>[Inicialización.]</strong> Establecer <span class="math inline">\(i \gets 1\)</span>.</li>
+<li><strong>[Comparación.]</strong> Si <span class="math inline">\(K = K_i\)</span>, el algoritmo termina con éxito.</li>
+<li><strong>[Avance.]</strong> Aumentar <span class="math inline">\(i\)</span> en 1.</li>
+<li><strong>[¿Fin de archivo?]</strong> Si <span class="math inline">\(i \leq N\)</span>, regresar al paso 2. De lo contrario, el algoritmo termina sin éxito.</li>
+</ol>
+<p>La complejidad de este algoritmo en el peor caso es <span class="math inline">\(O(n)\)</span></p>
+<div id="67e9e4fb-3a2a-44d2-bacc-b34ccd6f2527" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">busqueda_lineal</span>(arr, valor, contador)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i, elemento) <span class="kw">in</span> <span class="fu">enumerate</span>(arr)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        contador[] <span class="op">+=</span> <span class="fl">1</span>  <span class="co"># Incrementar contador de comparaciones</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> elemento <span class="op">&gt;=</span> valor</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i  <span class="co"># Devuelve la posición de inserción</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">length</span>(arr) <span class="op">+</span> <span class="fl">1</span>  <span class="co"># Insertar al final si todos los elementos son menores</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">buscar_lineal_en_listas</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Contador de comparaciones (usamos un Ref para poder modificarlo en las funciones)</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    total_comparaciones <span class="op">=</span> <span class="fu">Ref</span>(<span class="fl">0</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Diccionario para guardar resultados por clave</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    resultados <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{String, Dict}</span>()</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (clave, arr) <span class="kw">in</span> datos_ordenados</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        resultados_clave <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{Any, Any}</span>()</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>        comparaciones_clave <span class="op">=</span> <span class="fl">0</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> elemento <span class="kw">in</span> elementos_a_buscar</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Realizar búsqueda lineal</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>            posicion <span class="op">=</span> <span class="fu">busqueda_lineal</span>(arr, elemento, total_comparaciones)</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>            resultados_clave[elemento] <span class="op">=</span> posicion <span class="op">!=</span> <span class="op">-</span><span class="fl">1</span> ? <span class="st">"Encontrado en posición </span><span class="sc">$</span>posicion<span class="st">"</span> <span class="op">:</span> <span class="st">"No encontrado"</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>        resultados[clave] <span class="op">=</span> resultados_clave</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Devolver resultados y total de comparaciones</span></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados, total_comparaciones[]</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Función completa para cargar y buscar </span></span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">procesar_archivo_y_buscar_lineal</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Realizar búsquedas lineales en las listas</span></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a>    resultados, total_comparaciones <span class="op">=</span> <span class="fu">buscar_lineal_en_listas</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"Total de comparaciones realizadas (lineal): </span><span class="sc">$</span>total_comparaciones<span class="st">"</span>)</span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados</span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>procesar_archivo_y_buscar_lineal (generic function with 1 method)</code></pre>
+</div>
+</div>
+<div id="18d22892-3016-4a40-8b99-d0d0e306875f" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_lineal</span>(lista,consultas1)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_lineal</span>(lista,consultas2)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_lineal</span>(lista,consultas3)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_lineal</span>(lista,consultas4)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total de comparaciones realizadas (lineal): 1285284
+  1.085884 seconds (5.08 M allocations: 194.840 MiB, 49.78% gc time, 60.72% compilation time)
+Total de comparaciones realizadas (lineal): 6025401
+  0.574643 seconds (5.04 M allocations: 193.952 MiB, 6.19% gc time, 0.51% compilation time)
+Total de comparaciones realizadas (lineal): 76747269
+  3.351496 seconds (81.82 M allocations: 1.371 GiB, 14.31% gc time)
+Total de comparaciones realizadas (lineal): 989149917
+ 45.471095 seconds (996.18 M allocations: 14.996 GiB, 6.26% gc time)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>Dict{String, Dict} with 100 entries:
+  "reunion"      =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 1712", 4700=&gt;…
+  "virtual"      =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 712", 4700=&gt;"…
+  "julio"        =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 439", 4700=&gt;"…
+  "votos"        =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 752", 4700=&gt;"…
+  "propuesta"    =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 286", 4700=&gt;"…
+  "nacional"     =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 1530", 4700=&gt;…
+  "electoral"    =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 670", 4700=&gt;"…
+  "@m_ebrard"    =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 309", 4700=&gt;"…
+  "jovenes"      =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 424", 4700=&gt;"…
+  "_num"         =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 4212", 4700=&gt;…
+  "aqui"         =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 440", 4700=&gt;"…
+  "mayor"        =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 323", 4700=&gt;"…
+  "#envivo"      =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 606", 4700=&gt;"…
+  "👉"           =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 345", 4700=&gt;"…
+  "mexico"       =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 2852", 4700=&gt;…
+  "@epn"         =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 2158", 4700=&gt;…
+  "poder"        =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 434", 4700=&gt;"…
+  "pri"          =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 532", 4700=&gt;"…
+  "encuentro"    =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 647", 4700=&gt;"…
+  "pena"         =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 2500", 4700=&gt;…
+  "gano"         =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 495", 4700=&gt;"…
+  "reune"        =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 388", 4700=&gt;"…
+  "plan"         =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 358", 4700=&gt;"…
+  "presidencial" =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 680", 4700=&gt;"…
+  "resultados"   =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 469", 4700=&gt;"…
+  ⋮              =&gt; ⋮</code></pre>
+</div>
+</div>
+<p>Podemos observar que los tiempos de ejecuciones y número de comparaciones de este algoritmo aumentaron de manera significativa respecto al de búsqueda binaria, esto es porque la complejidad depende de la posición del valor buscado y de si se encuentra o no, siendo el peor caso <span class="math inline">\(O(n)\)</span>. Podemos observar que muchos de los valores que buscó no fueron encontrados para lo que el algoritmo comparó el valor buscado con todos los elementos de la lista antes de concluir que no está presente, es decir se comportó múltiples veces como el peor caso. Esto explica el aumento en varios órdenes en tiempos de ejecución y comparaciones.</p>
+</section>
+<section id="búsqueda-no-acotada-b_1" class="level2">
+<h2 class="anchored" data-anchor-id="búsqueda-no-acotada-b_1">Búsqueda no acotada <span class="math inline">\(B_1\)</span></h2>
+<p>Baeza-Yates y Salinger (2010) mencionan que el algoritmo de búsqueda exponencial, que se utiliza para localizar un elemento en un conjunto ordenado de manera eficiente consiste en dos fases:</p>
+<p>Fase 1: El proceso comienza seleccionando un elemento y buscándolo en otro conjunto mediante saltos exponenciales (1, 2, 4, …). hasta que el salto supera la posición del elemento buscado.</p>
+<p>Fase 2: Se realiza búsqueda binaria en el rango detectado. Esta estrategia, conocida como búsqueda galopante, imita la búsqueda binaria en secuencias no acotadas y mantiene una complejidad de <span class="math inline">\(O(\log p)\)</span> donde <span class="math inline">\(p\)</span> es la posición de inserción.</p>
+<div id="9b96278d-ad20-4ecb-b188-753927458061" class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JSON</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">busqueda_doubling</span>(arr, valor, contador)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(arr)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fase 1: Búsqueda exponencial para encontrar el rango</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> arr[<span class="fl">1</span>] <span class="op">==</span> valor</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        contador[] <span class="op">+=</span> <span class="fl">1</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">1</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    indice <span class="op">=</span> <span class="fl">2</span>  <span class="co"># Comenzamos desde el segundo elemento (índice 1 ya verificado)</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> indice <span class="op">&lt;=</span> n <span class="op">&amp;&amp;</span> arr[indice] <span class="op">&lt;</span> valor</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>        contador[] <span class="op">+=</span> <span class="fl">1</span>  <span class="co"># Comparación arr[indice] &lt; valor</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>        indice <span class="op">*=</span> <span class="fl">2</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ajustar los límites para la búsqueda binaria</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    bajo <span class="op">=</span> indice <span class="op">÷</span> <span class="fl">2</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    alto <span class="op">=</span> <span class="fu">min</span>(indice, n)</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fase 2: Búsqueda binaria dentro del rango encontrado</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> bajo <span class="op">&lt;=</span> alto</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>        medio <span class="op">=</span> (bajo <span class="op">+</span> alto) <span class="op">÷</span> <span class="fl">2</span></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>        contador[] <span class="op">+=</span> <span class="fl">1</span>  <span class="co"># Comparación arr[medio] == valor</span></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> arr[medio] <span class="op">==</span> valor</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> medio</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elseif</span> arr[medio] <span class="op">&lt;</span> valor</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>            bajo <span class="op">=</span> medio <span class="op">+</span> <span class="fl">1</span></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>            alto <span class="op">=</span> medio <span class="op">-</span> <span class="fl">1</span></span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="fl">1</span>  <span class="co"># Elemento no encontrado</span></span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">buscar_con_doubling</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Contador de comparaciones</span></span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>    total_comparaciones <span class="op">=</span> <span class="fu">Ref</span>(<span class="fl">0</span>)</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Diccionario para resultados</span></span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>    resultados <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{String, Dict}</span>()</span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (clave, arr) <span class="kw">in</span> datos_ordenados</span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>        resultados_clave <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{Any, Any}</span>()</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> elemento <span class="kw">in</span> elementos_a_buscar</span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>            posicion <span class="op">=</span> <span class="fu">busqueda_doubling</span>(arr, elemento, total_comparaciones)</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a>            resultados_clave[elemento] <span class="op">=</span> posicion <span class="op">!=</span> <span class="op">-</span><span class="fl">1</span> ? <span class="st">"Encontrado en posición </span><span class="sc">$</span>posicion<span class="st">"</span> <span class="op">:</span> <span class="st">"No encontrado"</span></span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a>        resultados[clave] <span class="op">=</span> resultados_clave</span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados, total_comparaciones[]</span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">procesar_archivo_y_buscar_doubling</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Realizar búsquedas con doubling search</span></span>
+<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a>    resultados, total_comparaciones <span class="op">=</span> <span class="fu">buscar_con_doubling</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"Total de comparaciones realizadas (doubling search): </span><span class="sc">$</span>total_comparaciones<span class="st">"</span>)</span>
+<span id="cb23-67"><a href="#cb23-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados</span>
+<span id="cb23-68"><a href="#cb23-68" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+<pre><code>procesar_archivo_y_buscar_doubling (generic function with 1 method)</code></pre>
+</div>
+</div>
+<div id="bf82570c-429e-4eea-bf14-f48c538fd4d3" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_doubling</span>(lista,consultas1)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_doubling</span>(lista,consultas2)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_doubling</span>(lista,consultas3)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_doubling</span>(lista,consultas4)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total de comparaciones realizadas (doubling search): 1228088
+  0.480016 seconds (257.94 k allocations: 10.365 MiB, 34.07% compilation time)
+Total de comparaciones realizadas (doubling search): 2917009
+  0.363662 seconds (247.15 k allocations: 11.062 MiB)
+Total de comparaciones realizadas (doubling search): 8181939
+  1.246572 seconds (15.08 M allocations: 275.526 MiB)
+Total de comparaciones realizadas (doubling search): 15754351
+  2.742887 seconds (27.03 M allocations: 457.676 MiB)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="47">
+<pre><code>Dict{String, Dict} with 100 entries:
+  "reunion"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "virtual"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "julio"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "votos"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "propuesta"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "nacional"     =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "electoral"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "@m_ebrard"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "jovenes"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "_num"         =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 4212", 4700=&gt;…
+  "aqui"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "mayor"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "#envivo"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "👉"           =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "mexico"       =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "@epn"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "poder"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "pri"          =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "encuentro"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "pena"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "gano"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "reune"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "plan"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "presidencial" =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "resultados"   =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  ⋮              =&gt; ⋮</code></pre>
+</div>
+</div>
+<p>Aquí podemos observar tiempos de ejecución y número de comparaciones similares a aquellos observados en búsqueda binaria lo cual es esperable ya que tiene un peor caso de $ O(n) $, sin embargo <span class="math inline">\(B_1\)</span> ofrece la ventaja que mientras más cercano esté el valor buscado al inicio de la lista puede ser más rápido que búsqueda binaria. Esto se aprecia claramente con las dos primeras listas de consultas, se ejecutan en menor tiempo y con menos número de comparaciones que Busqueda binaria, esto es porque los valores son menores y están más cerca del inicio de la lista si es que existen.</p>
+</section>
+<section id="búsqueda-no-acotada-b_2" class="level2">
+<h2 class="anchored" data-anchor-id="búsqueda-no-acotada-b_2">Búsqueda no acotada <span class="math inline">\(B_2\)</span></h2>
+<p>Similar a <span class="math inline">\(B_1\)</span> pero en lugar de aumentar el rango de búsqueda en potencias de 2 (como en <span class="math inline">\(B_1\)</span>: <span class="math inline">\(1, 2, 4, 8, 16, \dots\)</span>),</p>
+<p><span class="math inline">\(B_2\)</span> podría usa potencias de potencias, como <span class="math inline">\(2^{2^k}\)</span>:</p>
+<p>Ejemplo: <span class="math inline">\(2, 4, 16, 256, 65536, \dots\)</span></p>
+<p>Tiene complejidad de <span class="math inline">\(O(\log p)\)</span> donde <span class="math inline">\(p\)</span> es la posición de inserción.</p>
+<div id="837854f3-e3b2-42c2-816f-defccbd84dc4" class="cell" data-execution_count="60">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">JSON</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">busqueda_doblemente_doblada</span>(arr, valor, contador)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(arr)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Verificar el primer elemento</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    contador[] <span class="op">+=</span> <span class="fl">1</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    arr[<span class="fl">1</span>] <span class="op">==</span> valor <span class="op">&amp;&amp;</span> <span class="cf">return</span> <span class="fl">1</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fase 1: Búsqueda doblemente doblada </span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    indice <span class="op">=</span> <span class="fl">2</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> indice <span class="op">&lt;=</span> n</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Comparar el elemento actual</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        contador[] <span class="op">+=</span> <span class="fl">1</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> arr[indice] <span class="op">==</span> valor</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> indice</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elseif</span> arr[indice] <span class="op">&gt;</span> valor</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Aumentamos el índice de manera más agresiva </span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>        indice_previo <span class="op">=</span> indice</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>        indice <span class="op">*=</span> indice</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Verificar si nos pasamos del array</span></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> indice <span class="op">&gt;</span> n</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Retroceder y hacer búsqueda binaria entre indice_previo y n</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>            indice <span class="op">=</span> n</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Ajustar los límites para la búsqueda binaria</span></span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>    bajo <span class="op">=</span> <span class="fu">max</span>(indice <span class="op">÷</span> <span class="fl">4</span>, <span class="fl">1</span>)  <span class="co"># Retrocedemos un paso</span></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>    alto <span class="op">=</span> <span class="fu">min</span>(indice, n)</span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fase 2: Búsqueda binaria precisa</span></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> bajo <span class="op">&lt;=</span> alto</span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>        medio <span class="op">=</span> (bajo <span class="op">+</span> alto) <span class="op">÷</span> <span class="fl">2</span></span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>        contador[] <span class="op">+=</span> <span class="fl">1</span></span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> arr[medio] <span class="op">==</span> valor</span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> medio</span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elseif</span> arr[medio] <span class="op">&lt;</span> valor</span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>            bajo <span class="op">=</span> medio <span class="op">+</span> <span class="fl">1</span></span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>            alto <span class="op">=</span> medio <span class="op">-</span> <span class="fl">1</span></span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="fl">1</span></span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">buscar_con_doblemente_doblada</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a>    total_comparaciones <span class="op">=</span> <span class="fu">Ref</span>(<span class="fl">0</span>)</span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a>    resultados <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{String, Dict}</span>()</span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (clave, arr) <span class="kw">in</span> datos_ordenados</span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a>        resultados_clave <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{Any, Any}</span>()</span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> elemento <span class="kw">in</span> elementos_a_buscar</span>
+<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a>            posicion <span class="op">=</span> <span class="fu">busqueda_doblemente_doblada</span>(arr, elemento, total_comparaciones)</span>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a>            resultados_clave[elemento] <span class="op">=</span> posicion <span class="op">!=</span> <span class="op">-</span><span class="fl">1</span> ? <span class="st">"Encontrado en posición </span><span class="sc">$</span>posicion<span class="st">"</span> <span class="op">:</span> <span class="st">"No encontrado"</span></span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a>        resultados[clave] <span class="op">=</span> resultados_clave</span>
+<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados, total_comparaciones[]</span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">procesar_archivo_y_buscar_dd</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a>    resultados, total_comparaciones <span class="op">=</span> <span class="fu">buscar_con_doblemente_doblada</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"Total de comparaciones realizadas (doubling-doubling search): </span><span class="sc">$</span>total_comparaciones<span class="st">"</span>)</span>
+<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados</span>
+<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="60">
+<pre><code>procesar_archivo_y_buscar_dd (generic function with 1 method)</code></pre>
+</div>
+</div>
+<div id="463e3db1-6106-490d-929c-1ca8779f1f6a" class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_dd</span>(lista,consultas1)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_dd</span>(lista,consultas2)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_dd</span>(lista,consultas3)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@time</span> <span class="cf">begin</span> </span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">procesar_archivo_y_buscar_dd</span>(lista,consultas4)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total de comparaciones realizadas (doubling-doubling search): 3197982
+  0.417825 seconds (261.24 k allocations: 10.552 MiB, 24.58% compilation time)
+Total de comparaciones realizadas (doubling-doubling search): 5158847
+  0.420363 seconds (183.97 k allocations: 8.652 MiB)
+Total de comparaciones realizadas (doubling-doubling search): 10121250
+  3.014676 seconds (19.33 M allocations: 337.420 MiB, 67.26% gc time)
+Total de comparaciones realizadas (doubling-doubling search): 13909594
+  1.143733 seconds (28.57 M allocations: 480.533 MiB)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="61">
+<pre><code>Dict{String, Dict} with 100 entries:
+  "reunion"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "virtual"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "julio"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "votos"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "propuesta"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "nacional"     =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "electoral"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "@m_ebrard"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "jovenes"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "_num"         =&gt; Dict{Any, Any}(31905=&gt;"Encontrado en posición 4212", 4700=&gt;…
+  "aqui"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "mayor"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "#envivo"      =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "👉"           =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "mexico"       =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "@epn"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "poder"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "pri"          =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "encuentro"    =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "pena"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "gano"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "reune"        =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "plan"         =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "presidencial" =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  "resultados"   =&gt; Dict{Any, Any}(31905=&gt;"No encontrado", 4700=&gt;"No encontrado…
+  ⋮              =&gt; ⋮</code></pre>
+</div>
+</div>
+<p>Como podemos ver <span class="math inline">\(B_2\)</span> no muestra diferencias significativas respecto a <span class="math inline">\(B_1\)</span>, en términos de tiempo de ejecución se muestra similar y en número de comparaciones también está dentro del mismo orden de magnitud. Este algoritmo podría ser más últil en busquedas dentro de listas de un tamaño mucho mayor a las usadas en este experimento, ya que su fase de expansión crece de manera más acelerada.</p>
+</section>
+<section id="búsqueda-mediante-la-estructura-de-datos-skiplist" class="level2">
+<h2 class="anchored" data-anchor-id="búsqueda-mediante-la-estructura-de-datos-skiplist">Búsqueda mediante la estructura de datos SkipList</h2>
+<p>Pugh (1990) propuso como una alternativa simple y eficiente a estructuras de datos balanceadas como los árboles de búsqueda. Una SkipList es una lista enlazada jerárquica con múltiples niveles. Cada nivel es una sublista de los niveles inferiores, lo que permite realizar búsquedas en <span class="math inline">\(O(logn)\)</span> en promedio.</p>
+<p>Se empieza en el nivel más alto y se desciende progresivamente hasta encontrar el elemento deseado.Se asigna un nivel aleatorio al nuevo nodo y se insertan enlaces en los niveles correspondientes. Se eliminan los enlaces del nodo en cada nivel en el que aparece.</p>
+<p>Dependen de la asignación aleatoria de niveles a los nodos, lo que en promedio garantiza una estructura balanceada sin necesidad de reestructuración explícita.</p>
+<p>Aunque el peor caso es <span class="math inline">\(O(n)\)</span>, este es muy poco probable, y en la práctica, el tiempo esperado para búsqueda, inserción y eliminación es <span class="math inline">\(O(logn)\)</span>. (Pugh, 1990)</p>
+<div id="a4956054-1879-47e4-887a-f87db9ac366c" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se cambia el tipo de datos en las listas del diccionario a enteros, para que el algortimo pueda funcionar correctamente</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> clave <span class="kw">in</span> <span class="fu">keys</span>(lista)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    lista[clave] <span class="op">=</span> [<span class="fu">Int</span>(x) for x <span class="kw">in</span> lista[clave]]</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c9f0c257-03e6-480a-820c-514ddffa8a7e" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Random</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Estructura de nodo para la Skip List</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="kw">mutable struct</span> SkipNode</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    value<span class="op">::</span><span class="dt">Int</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    forward<span class="op">::</span><span class="dt">Vector{Union{SkipNode, Nothing}}  </span><span class="co"># Array de punteros forward</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Estructura de la Skip List</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="kw">mutable struct</span> SkipList</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    header<span class="op">::</span><span class="dt">SkipNode</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    level<span class="op">::</span><span class="dt">Int</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    max_level<span class="op">::</span><span class="dt">Int</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    p<span class="op">::</span><span class="dt">Float64  </span><span class="co"># Probabilidad para los niveles</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para crear un nuevo nodo</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">create_node</span>(value<span class="op">::</span><span class="dt">Int</span>, level<span class="op">::</span><span class="dt">Int</span>)</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SkipNode</span>(value, [<span class="cn">nothing</span> for _ <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>level])</span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para inicializar una Skip List</span></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">create_skip_list</span>(max_level<span class="op">::</span><span class="dt">Int</span>, p<span class="op">::</span><span class="dt">Float64</span>=<span class="fl">0.5</span>)</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>    header <span class="op">=</span> <span class="fu">create_node</span>(<span class="op">-</span><span class="fl">1</span>, max_level)  <span class="co"># Valor -1 como cabeza</span></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SkipList</span>(header, <span class="fl">1</span>, max_level, p)</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para determinar el nivel aleatorio de un nuevo nodo</span></span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">random_level</span>(skip_list<span class="op">::</span><span class="dt">SkipList</span>)</span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>    level <span class="op">=</span> <span class="fl">1</span></span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="fu">rand</span>() <span class="op">&lt;</span> skip_list.p <span class="op">&amp;&amp;</span> level <span class="op">&lt;</span> skip_list.max_level</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>        level <span class="op">+=</span> <span class="fl">1</span></span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> level</span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para insertar un valor en la Skip List</span></span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">insert!</span>(skip_list<span class="op">::</span><span class="dt">SkipList</span>, value<span class="op">::</span><span class="dt">Int</span>)</span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a>    update <span class="op">=</span> [<span class="cn">nothing</span> for _ <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>skip_list.max_level]</span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a>    current <span class="op">=</span> skip_list.header</span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Buscar la posición de inserción</span></span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> skip_list.level<span class="op">:-</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span></span>
+<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> current.forward[i] <span class="op">!==</span> <span class="cn">nothing</span> <span class="op">&amp;&amp;</span> current.forward[i].value <span class="op">&lt;</span> value</span>
+<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a>            current <span class="op">=</span> current.forward[i]</span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a>        update[i] <span class="op">=</span> current</span>
+<span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb34-49"><a href="#cb34-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a>    current <span class="op">=</span> current.forward[<span class="fl">1</span>]</span>
+<span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Si el valor no existe, insertarlo</span></span>
+<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> current <span class="op">===</span> <span class="cn">nothing</span> <span class="op">||</span> current.value <span class="op">!=</span> value</span>
+<span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a>        new_level <span class="op">=</span> <span class="fu">random_level</span>(skip_list)</span>
+<span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb34-56"><a href="#cb34-56" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Ajustar el nivel de la Skip List si es necesario</span></span>
+<span id="cb34-57"><a href="#cb34-57" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_level <span class="op">&gt;</span> skip_list.level</span>
+<span id="cb34-58"><a href="#cb34-58" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> skip_list.level<span class="op">+</span><span class="fl">1</span><span class="op">:</span>new_level</span>
+<span id="cb34-59"><a href="#cb34-59" aria-hidden="true" tabindex="-1"></a>                update[i] <span class="op">=</span> skip_list.header</span>
+<span id="cb34-60"><a href="#cb34-60" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb34-61"><a href="#cb34-61" aria-hidden="true" tabindex="-1"></a>            skip_list.level <span class="op">=</span> new_level</span>
+<span id="cb34-62"><a href="#cb34-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb34-63"><a href="#cb34-63" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb34-64"><a href="#cb34-64" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Crear el nuevo nodo</span></span>
+<span id="cb34-65"><a href="#cb34-65" aria-hidden="true" tabindex="-1"></a>        new_node <span class="op">=</span> <span class="fu">create_node</span>(value, new_level)</span>
+<span id="cb34-66"><a href="#cb34-66" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb34-67"><a href="#cb34-67" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Insertar el nodo</span></span>
+<span id="cb34-68"><a href="#cb34-68" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>new_level</span>
+<span id="cb34-69"><a href="#cb34-69" aria-hidden="true" tabindex="-1"></a>            new_node.forward[i] <span class="op">=</span> update[i].forward[i]</span>
+<span id="cb34-70"><a href="#cb34-70" aria-hidden="true" tabindex="-1"></a>            update[i].forward[i] <span class="op">=</span> new_node</span>
+<span id="cb34-71"><a href="#cb34-71" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb34-72"><a href="#cb34-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb34-73"><a href="#cb34-73" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb34-74"><a href="#cb34-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-75"><a href="#cb34-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de búsqueda en la Skip List (con contador de comparaciones)</span></span>
+<span id="cb34-76"><a href="#cb34-76" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">search</span>(skip_list<span class="op">::</span><span class="dt">SkipList</span>, value<span class="op">::</span><span class="dt">Int</span>, counter<span class="op">::</span><span class="dt">Ref{Int}</span>=<span class="fu">Ref</span>(<span class="fl">0</span>))</span>
+<span id="cb34-77"><a href="#cb34-77" aria-hidden="true" tabindex="-1"></a>    current <span class="op">=</span> skip_list.header</span>
+<span id="cb34-78"><a href="#cb34-78" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-79"><a href="#cb34-79" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Buscar desde el nivel más alto hacia abajo</span></span>
+<span id="cb34-80"><a href="#cb34-80" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> skip_list.level<span class="op">:-</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span></span>
+<span id="cb34-81"><a href="#cb34-81" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> current.forward[i] <span class="op">!==</span> <span class="cn">nothing</span></span>
+<span id="cb34-82"><a href="#cb34-82" aria-hidden="true" tabindex="-1"></a>            counter[] <span class="op">+=</span> <span class="fl">1</span>  <span class="co"># Contar la comparación</span></span>
+<span id="cb34-83"><a href="#cb34-83" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> current.forward[i].value <span class="op">==</span> value</span>
+<span id="cb34-84"><a href="#cb34-84" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> <span class="cn">true</span>  <span class="co"># Valor encontrado</span></span>
+<span id="cb34-85"><a href="#cb34-85" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elseif</span> current.forward[i].value <span class="op">&lt;</span> value</span>
+<span id="cb34-86"><a href="#cb34-86" aria-hidden="true" tabindex="-1"></a>                current <span class="op">=</span> current.forward[i]</span>
+<span id="cb34-87"><a href="#cb34-87" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span></span>
+<span id="cb34-88"><a href="#cb34-88" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span></span>
+<span id="cb34-89"><a href="#cb34-89" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb34-90"><a href="#cb34-90" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb34-91"><a href="#cb34-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb34-92"><a href="#cb34-92" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-93"><a href="#cb34-93" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Verificar en el nivel más bajo</span></span>
+<span id="cb34-94"><a href="#cb34-94" aria-hidden="true" tabindex="-1"></a>    current <span class="op">=</span> current.forward[<span class="fl">1</span>]</span>
+<span id="cb34-95"><a href="#cb34-95" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> current <span class="op">!==</span> <span class="cn">nothing</span> <span class="op">&amp;&amp;</span> current.value <span class="op">==</span> value</span>
+<span id="cb34-96"><a href="#cb34-96" aria-hidden="true" tabindex="-1"></a>        counter[] <span class="op">+=</span> <span class="fl">1</span></span>
+<span id="cb34-97"><a href="#cb34-97" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="cn">true</span></span>
+<span id="cb34-98"><a href="#cb34-98" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb34-99"><a href="#cb34-99" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-100"><a href="#cb34-100" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="cn">false</span>  <span class="co"># Valor no encontrado</span></span>
+<span id="cb34-101"><a href="#cb34-101" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb34-102"><a href="#cb34-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-103"><a href="#cb34-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para construir Skip List desde un array ordenado</span></span>
+<span id="cb34-104"><a href="#cb34-104" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">build_skip_list</span>(sorted_array<span class="op">::</span><span class="dt">Vector{Int}</span>, max_level<span class="op">::</span><span class="dt">Int</span>=<span class="fl">16</span>, p<span class="op">::</span><span class="dt">Float64</span>=<span class="fl">0.5</span>)</span>
+<span id="cb34-105"><a href="#cb34-105" aria-hidden="true" tabindex="-1"></a>    skip_list <span class="op">=</span> <span class="fu">create_skip_list</span>(max_level, p)</span>
+<span id="cb34-106"><a href="#cb34-106" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> value <span class="kw">in</span> sorted_array</span>
+<span id="cb34-107"><a href="#cb34-107" aria-hidden="true" tabindex="-1"></a>        <span class="fu">insert!</span>(skip_list, value)</span>
+<span id="cb34-108"><a href="#cb34-108" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> skip_list</span>
+<span id="cb34-110"><a href="#cb34-110" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb34-111"><a href="#cb34-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-112"><a href="#cb34-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Función principal para buscar en múltiples listas</span></span>
+<span id="cb34-113"><a href="#cb34-113" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">buscar_con_skip_lists</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb34-114"><a href="#cb34-114" aria-hidden="true" tabindex="-1"></a>    total_comparaciones <span class="op">=</span> <span class="fu">Ref</span>(<span class="fl">0</span>)</span>
+<span id="cb34-115"><a href="#cb34-115" aria-hidden="true" tabindex="-1"></a>    resultados <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{String, Dict}</span>()</span>
+<span id="cb34-116"><a href="#cb34-116" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-117"><a href="#cb34-117" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (clave, arr) <span class="kw">in</span> datos_ordenados</span>
+<span id="cb34-118"><a href="#cb34-118" aria-hidden="true" tabindex="-1"></a>        resultados_clave <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{Any, Any}</span>()</span>
+<span id="cb34-119"><a href="#cb34-119" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb34-120"><a href="#cb34-120" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Construir la Skip List para esta lista ordenada</span></span>
+<span id="cb34-121"><a href="#cb34-121" aria-hidden="true" tabindex="-1"></a>        skip_list <span class="op">=</span> <span class="fu">build_skip_list</span>(arr)</span>
+<span id="cb34-122"><a href="#cb34-122" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb34-123"><a href="#cb34-123" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> elemento <span class="kw">in</span> elementos_a_buscar</span>
+<span id="cb34-124"><a href="#cb34-124" aria-hidden="true" tabindex="-1"></a>            counter <span class="op">=</span> <span class="fu">Ref</span>(<span class="fl">0</span>)</span>
+<span id="cb34-125"><a href="#cb34-125" aria-hidden="true" tabindex="-1"></a>            encontrado <span class="op">=</span> <span class="fu">search</span>(skip_list, elemento, counter)</span>
+<span id="cb34-126"><a href="#cb34-126" aria-hidden="true" tabindex="-1"></a>            total_comparaciones[] <span class="op">+=</span> counter[]</span>
+<span id="cb34-127"><a href="#cb34-127" aria-hidden="true" tabindex="-1"></a>            resultados_clave[elemento] <span class="op">=</span> encontrado ? <span class="st">"Encontrado"</span> <span class="op">:</span> <span class="st">"No encontrado"</span></span>
+<span id="cb34-128"><a href="#cb34-128" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb34-129"><a href="#cb34-129" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb34-130"><a href="#cb34-130" aria-hidden="true" tabindex="-1"></a>        resultados[clave] <span class="op">=</span> resultados_clave</span>
+<span id="cb34-131"><a href="#cb34-131" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb34-132"><a href="#cb34-132" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-133"><a href="#cb34-133" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados, total_comparaciones[]</span>
+<span id="cb34-134"><a href="#cb34-134" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb34-135"><a href="#cb34-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-136"><a href="#cb34-136" aria-hidden="true" tabindex="-1"></a><span class="co"># Función completa para procesar archivos</span></span>
+<span id="cb34-137"><a href="#cb34-137" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">procesar_archivo_con_skip_lists</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb34-138"><a href="#cb34-138" aria-hidden="true" tabindex="-1"></a>    <span class="co">#datos_ordenados = ordenar_json(p)</span></span>
+<span id="cb34-139"><a href="#cb34-139" aria-hidden="true" tabindex="-1"></a>    resultados, total_comparaciones <span class="op">=</span> <span class="fu">buscar_con_skip_lists</span>(datos_ordenados, elementos_a_buscar)</span>
+<span id="cb34-140"><a href="#cb34-140" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-141"><a href="#cb34-141" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">"Total de comparaciones realizadas (Skip List): </span><span class="sc">$</span>total_comparaciones<span class="st">"</span>)</span>
+<span id="cb34-142"><a href="#cb34-142" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultados</span>
+<span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>procesar_archivo_con_skip_lists (generic function with 2 methods)</code></pre>
+</div>
+</div>
+<div id="571ae3cf-96af-4ea9-a7b9-43109d8addf2" class="cell" data-scrolled="true" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">procesar_archivo_con_skip_lists</span>(lista, consultas1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>LoadError: cannot convert a value to nothing for assignment
+cannot convert a value to nothing for assignment
+
+Stacktrace:
+  [1] error(s::String)
+    @ Base .\error.jl:35
+  [2] nonnothingtype_checked(T::Type)
+    @ Base .\some.jl:32
+  [3] convert(::Type{Nothing}, x::SkipNode)
+    @ Base .\some.jl:37
+  [4] setindex!(A::Vector{Nothing}, x::SkipNode, i::Int64)
+    @ Base .\array.jl:987
+  [5] insert!(skip_list::SkipList, value::Int64)
+    @ Main .\In[19]:47
+  [6] build_skip_list
+    @ .\In[19]:107 [inlined]
+  [7] build_skip_list
+    @ .\In[19]:105 [inlined]
+  [8] buscar_con_skip_lists(datos_ordenados::Dict{String, Any}, elementos_a_buscar::Vector{Any})
+    @ Main .\In[19]:121
+  [9] procesar_archivo_con_skip_lists(datos_ordenados::Dict{String, Any}, elementos_a_buscar::Vector{Any})
+    @ Main .\In[19]:139
+ [10] top-level scope
+    @ In[20]:1</code></pre>
+</div>
+</div>
+</section>
+<section id="discusión-y-resultados" class="level2">
+<h2 class="anchored" data-anchor-id="discusión-y-resultados">Discusión y resultados</h2>
+<p>A continuación se muestran dos tablas en las que se resumen los resultados de los experimentos. Una de tiempos de ejecución y la otra de Número de comparaciones.</p>
+<section id="tabla.-1-tiempo-de-ejecución-en-segundos-de-cada-lista-de-consultas-con-su-respectivo-orden-de-magnitud-para-cada-algoritmo." class="level3">
+<h3 class="anchored" data-anchor-id="tabla.-1-tiempo-de-ejecución-en-segundos-de-cada-lista-de-consultas-con-su-respectivo-orden-de-magnitud-para-cada-algoritmo.">Tabla. 1 Tiempo de ejecución en segundos de cada lista de consultas con su respectivo orden de magnitud para cada algoritmo.</h3>
+<span class="math display">\[\begin{array}{|l|c|c|c|c|}
+\hline
+&amp; \textbf{B. binaria} &amp; \textbf{$B_0$} &amp; \textbf{$B_1$} &amp; \textbf{$B_2$} \\
+\hline
+Consultas orden 10^0 &amp; 0.857163 &amp; 1.085884  &amp; 0.480016 &amp; 0.417825 \\
+Consultas orden 10^1 &amp; 0.635125 &amp; 0.574643  &amp; 0.363662 &amp; 0.420363 \\
+Consultas orden 10^2 &amp; 1.125757 &amp; 3.351496  &amp; 1.246572 &amp; 3.014676 \\
+Consultas orden 10^3 &amp; 1.054306 &amp; 45.471095  &amp; 2.742887 &amp; 1.143733 \\
+\hline
+\end{array}\]</span>
+</section>
+<section id="tabla.-2-número-de-comparaciones-realizadas-de-cada-lista-de-consultas-con-su-respectivo-orden-de-magnitud-para-cada-algoritmo." class="level3">
+<h3 class="anchored" data-anchor-id="tabla.-2-número-de-comparaciones-realizadas-de-cada-lista-de-consultas-con-su-respectivo-orden-de-magnitud-para-cada-algoritmo.">Tabla. 2 Número de comparaciones realizadas de cada lista de consultas con su respectivo orden de magnitud para cada algoritmo.</h3>
+<span class="math display">\[\begin{array}{|l|c|c|c|c|}
+\hline
+&amp; \textbf{B. binaria} &amp; \textbf{$B_0$} &amp; \textbf{$B_1$} &amp; \textbf{$B_2$} \\
+\hline
+\text{Consultas orden }10^0 &amp; 9.66 \times 10^6 &amp; 1.28 \times 10^6 &amp; 1.23 \times 10^6 &amp; 3.20 \times 10^6 \\
+\text{Consultas orden }10^1 &amp; 9.81 \times 10^6 &amp; 6.02 \times 10^6 &amp; 2.92 \times 10^6 &amp; 5.16 \times 10^6 \\
+\text{Consultas orden }10^2 &amp; 1.00 \times 10^7 &amp; 7.67 \times 10^7 &amp; 8.18 \times 10^6 &amp; 1.01 \times 10^7 \\
+\text{Consultas orden }10^3 &amp; 1.01 \times 10^7 &amp; 9.89 \times 10^8 &amp; 1.58 \times 10^7 &amp; 1.39 \times 10^7 \\
+\hline
+\end{array}\]</span>
+<p>Los resultados experimentales permiten observar diferencias fundamentales en el comportamiento de los algoritmos de búsqueda analizados:</p>
+</section>
+<section id="búsqueda-binaria" class="level3">
+<h3 class="anchored" data-anchor-id="búsqueda-binaria">1. Búsqueda Binaria</h3>
+<p>Como era de esperarse por su complejidad teórica <span class="math inline">\(O(\log n)\)</span>, este algoritmo mantuvo tiempos de ejecución y número de comparaciones relativamente constantes, independientemente del orden de magnitud de los elementos en las listas de consulta (que variaban desde <span class="math inline">\(10^0\)</span> hasta <span class="math inline">\(10^3\)</span>). Sin embargo, se registró un incremento notable en el número de asignaciones, lo cual puede atribuirse al manejo de números más grandes en las operaciones de comparación.</p>
+</section>
+<section id="búsqueda-no-acotada-secuencial-b_0" class="level3">
+<h3 class="anchored" data-anchor-id="búsqueda-no-acotada-secuencial-b_0">2. Búsqueda no acotada Secuencial (<span class="math inline">\(B_0\)</span>)</h3>
+<p>Para las consultas de menor orden presento rendimientos comparables al resto de los algoritmos, incluso mejores que en búqueda binaria, pero para las de mayor orden presentó un deterioro significativo en el rendimiento, con tiempos de ejecución y comparaciones que aumentaron hasta un órden de magnitud respecto a los otros algoritmos. Esto se explica por su naturaleza <span class="math inline">\(O(n)\)</span> y porque, en muchos casos, el algoritmo operó en el peor escenario posible.</p>
+</section>
+<section id="búsqueda-no-acotada-b_1-1" class="level3">
+<h3 class="anchored" data-anchor-id="búsqueda-no-acotada-b_1-1">3. Búsqueda no acotada (<span class="math inline">\(B_1\)</span>)</h3>
+<p>Mostró un rendimiento comparable al de la búsqueda binaria (<span class="math inline">\(O(\log n)\)</span> en el peor caso), pero con una ventaja notable para valores cercanos al inicio de la lista. Esto fue particularmente evidente en las consultas con elementos de menor magnitud (<span class="math inline">\(10^0\)</span> y <span class="math inline">\(10^1\)</span>).</p>
+</section>
+<section id="búsqueda-no-acotada-b_2-1" class="level3">
+<h3 class="anchored" data-anchor-id="búsqueda-no-acotada-b_2-1">4. Búsqueda no acotada (<span class="math inline">\(B_2\)</span>)</h3>
+<p>No mostró diferencias significativas respecto a <span class="math inline">\(B_1\)</span> en este experimento, manteniéndose en el mismo orden de magnitud tanto en tiempo como en comparaciones.</p>
+</section>
+</section>
+<section id="conclusión" class="level2">
+<h2 class="anchored" data-anchor-id="conclusión">Conclusión</h2>
+<p>De lo anterior se puede concluir que probablemente búsqueda binaria sea la opción más confiable para conjuntos ordenados de tamaño arbitrario, sin embargo, <span class="math inline">\(B_1\)</span> y <span class="math inline">\(B_2\)</span> mostraron ser alternativas fiables en todos los casos y con potencial para ser usados en contextos específicos, como tamaños de listas muy grandes o busqueda de valores cercanos al inicio de la lista. Finalmente la busqueda secuencial si bien es el algoritmo más simple, también demostró ser el más lento e ineficiente.</p>
+</section>
+<section id="bibliografía" class="level2">
+<h2 class="anchored" data-anchor-id="bibliografía">Bibliografía</h2>
+<p>Baeza-Yates, R., &amp; Salinger, A. (2010). Fast intersection algorithms for sorted sequences. In T. Elomaa, H. Mannila, &amp; P. Orponen (Eds.), Algorithms and applications: Essays dedicated to Esko Ukkonen on the occasion of his 60th birthday (pp.&nbsp;45–61). Springer. https://doi.org/10.1007/978-3-642-12476-1_3</p>
+<p>Knuth, D. E. (1998). The art of computer programming (2ª ed.). Addison Wesley Longman, Inc.</p>
+<p>Pugh, W. (1990). Skip lists: A probabilistic alternative to balanced trees. Communications of the ACM, 33(6), 668-676. https://doi.org/10.1145/78973.78977</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

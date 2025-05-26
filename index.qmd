@@ -1,0 +1,12 @@
+# Análisis de Algoritmos 2025
+
+Bienvenido/a. Este sitio contiene un Compendio de reportes de reportes escritos para la clase de Análisis de Algoritmos de la Maestría en Ciencia de Datos INFOTEC
+
+## Contenido
+
+- [Unidad 1: Experimentos y análisis](VillegasJoseAlbertoU1T1.ipynb)
+- [Unidad 2: Estructuras de datos](VillegasJoseAlberto-U2-T1.ipynb)
+- [Unidad 3: Algoritmos de ordenamiento](VillegasJoseAlbertoU3-T1.ipynb)
+- [Unidad 4: Algoritmos de búsqueda](VillegasJoseAlbertoU4-T1.ipynb)
+- [Unidad 5: Intersección de conjuntos](VillegasJoseAlbertoU5-T1.ipynb)
+
