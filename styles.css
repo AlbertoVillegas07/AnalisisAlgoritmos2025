@@ -13,3 +13,18 @@ body {
 p {
   text-align: justify;
 }
+/* Enlace normal */
+a {
+  color: #0000EE; /* Azul clásico */
+  text-decoration: underline;
+}
+
+/* Enlace visitado */
+a:visited {
+  color: #551A8B; /* Morado clásico */
+}
+
+/* Enlace al pasar el mouse */
+a:hover {
+  color: #1E90FF; /* Azul brillante */
+}
